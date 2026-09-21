@@ -1,515 +1,1763 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AIIA CTMS — Clinical Trial Portfolio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --green:#1B7A46;
-    --green-light:#2E9D5D;
-    --blue:#123F7B;
-    --blue-light:#1D5BA0;
-    --saffron:#DB8A2C;
-    --saffron-dim:#FBEAD2;
-    --bg:#F3F7F4;
-    --panel:#FFFFFF;
-    --ink:#132420;
-    --ink-soft:#52655D;
-    --border:#DCE6DF;
-    --red:#AE3B2C;
-    --red-dim:#F7E3DE;
-    --gradient:linear-gradient(115deg, var(--green) 0%, var(--green-light) 30%, var(--blue-light) 68%, var(--blue) 100%);
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:'Inter',system-ui,sans-serif; font-size:14px; line-height:1.5;
-  }
-  h1,h2,h3,h4{font-family:'Lora',Georgia,serif; margin:0; font-weight:600;}
-  a{color:inherit;}
-  button{font-family:inherit;}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AIIA CTMS — Clinical Trial Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Devanagari:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --green: #1b7a46;
+        --green-light: #2e9d5d;
+        --blue: #123f7b;
+        --blue-light: #1d5ba0;
+        --saffron: #db8a2c;
+        --saffron-dim: #fbead2;
+        --bg: #f3f7f4;
+        --panel: #ffffff;
+        --ink: #132420;
+        --ink-soft: #52655d;
+        --border: #dce6df;
+        --red: #ae3b2c;
+        --red-dim: #f7e3de;
+        --gradient: linear-gradient(
+          115deg,
+          var(--green) 0%,
+          var(--green-light) 30%,
+          var(--blue-light) 68%,
+          var(--blue) 100%
+        );
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Open Sans", system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Lora", Georgia, serif;
+        margin: 0;
+        font-weight: 600;
+      }
+      a {
+        color: inherit;
+      }
+      button {
+        font-family: inherit;
+      }
 
-  /* ---------- Login screen ---------- */
-  #loginScreen{
-    min-height:100vh; display:flex; align-items:center; justify-content:center;
-    background:var(--gradient); padding:24px;
-  }
-  .login-card{
-    background:var(--panel); border-radius:12px; padding:36px 34px; width:100%; max-width:380px;
-    box-shadow:0 18px 50px rgba(10,30,20,.25);
-  }
-  .login-card .tag{font-size:11px; letter-spacing:.02em; color:var(--green); font-weight:600; margin-bottom:6px;}
-  .login-card h1{font-size:21px; color:var(--ink); margin-bottom:4px;}
-  .login-card p.sub{font-size:12.5px; color:var(--ink-soft); margin:0 0 22px 0;}
-  .login-card label{display:block; font-size:12px; color:var(--ink-soft); margin-bottom:5px; margin-top:14px;}
-  .login-card input, .login-card select{
-    width:100%; padding:9px 11px; border:1px solid var(--border); border-radius:6px; font-size:13.5px; font-family:inherit;
-  }
-  .login-card button{
-    width:100%; margin-top:20px; background:var(--green); color:#fff; border:none; padding:11px;
-    border-radius:7px; font-weight:600; font-size:14px; cursor:pointer;
-  }
-  .login-card button:hover{background:#155f38;}
-  .login-hint{margin-top:16px; font-size:11.5px; color:var(--ink-soft); background:#F1F5F2; border-radius:6px; padding:10px 12px;}
-  .login-error{color:var(--red); font-size:12.5px; margin-top:10px; min-height:16px;}
+      /* ---------- Login screen ---------- */
+      #loginScreen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gradient);
+        padding: 24px;
+      }
+      .login-card {
+        background: var(--panel);
+        border-radius: 12px;
+        padding: 36px 34px;
+        width: 100%;
+        max-width: 470px;
+        box-shadow: 0 18px 50px rgba(10, 30, 20, 0.25);
+      }
+      .login-card .tag {
+        font-size: 12.5px;
+        letter-spacing: 0.02em;
+        color: var(--green);
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .login-card h1 {
+        font-size: 24px;
+        color: var(--ink);
+        margin-bottom: 4px;
+      }
+      .login-card p.sub {
+        font-size: 14.5px;
+        color: var(--ink-soft);
+        margin: 0 0 22px 0;
+      }
+      .login-card label {
+        display: block;
+        font-size: 13.5px;
+        color: var(--ink-soft);
+        margin-bottom: 5px;
+        margin-top: 14px;
+      }
+      .login-card input,
+      .login-card select {
+        width: 100%;
+        padding: 9px 11px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 15.5px;
+        font-family: inherit;
+      }
+      .login-card button {
+        width: 100%;
+        margin-top: 20px;
+        background: var(--green);
+        color: #fff;
+        border: none;
+        padding: 11px;
+        border-radius: 7px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .login-card button:hover {
+        background: #155f38;
+      }
+      .login-hint {
+        margin-top: 16px;
+        font-size: 13px;
+        color: var(--ink-soft);
+        background: #f1f5f2;
+        border-radius: 6px;
+        padding: 10px 12px;
+      }
+      .login-error {
+        color: var(--red);
+        font-size: 14.5px;
+        margin-top: 10px;
+        min-height: 16px;
+      }
 
-  /* ---------- App shell ---------- */
-  .app{display:none; grid-template-columns:230px 1fr; min-height:100vh;}
-  .app.visible{display:grid;}
-  .sidebar{
-    background:var(--gradient); color:#fff; padding:26px 18px; display:flex; flex-direction:column; gap:22px;
-  }
-  .brand h1{font-size:18px; color:#fff;}
-  .brand span{font-size:11.5px; color:#DCEFE2; display:block; margin-top:2px;}
-  .user-chip{background:rgba(255,255,255,.14); border-radius:8px; padding:10px 12px; font-size:12.5px;}
-  .user-chip .name{font-weight:600; display:block;}
-  .user-chip .role{color:#DCEFE2; font-size:11px;}
-  .nav-list{display:flex; flex-direction:column; gap:3px;}
-  .nav-item{font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:#BFE0CC; margin:10px 0 2px 4px;}
-  .nav-btn{
-    text-align:left; background:transparent; border:none; color:#E7F3EA; padding:8px 10px;
-    border-radius:6px; cursor:pointer; font-size:13px;
-  }
-  .nav-btn:hover{background:rgba(255,255,255,.1);}
-  .nav-btn.active{background:#fff; color:var(--green); font-weight:600;}
-  .sidebar-foot{margin-top:auto; font-size:10.5px; color:#BFE0CC; line-height:1.5;}
-  .logout-btn{
-    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3); color:#fff;
-    padding:7px 10px; border-radius:6px; font-size:12px; cursor:pointer;
-  }
-  .logout-btn:hover{background:rgba(255,255,255,.22);}
+      /* ---------- App shell ---------- */
+      .app {
+        display: none;
+        grid-template-columns: 255px 1fr;
+        min-height: 100vh;
+      }
+      .app.visible {
+        display: grid;
+      }
+      /* UI SIZE KNOB: 1 = normal, 1.1 = 10% bigger everywhere inside the dashboard */
+      .app {
+        zoom: 1;
+      }
+      .sidebar {
+        background: var(--gradient);
+        color: #fff;
+        padding: 26px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .brand h1 {
+        font-size: 20.5px;
+        color: #fff;
+      }
+      .brand span {
+        font-size: 13px;
+        color: #dcefe2;
+        display: block;
+        margin-top: 2px;
+      }
+      .user-chip {
+        background: rgba(255, 255, 255, 0.14);
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 14.5px;
+      }
+      .user-chip .name {
+        font-weight: 600;
+        display: block;
+      }
+      .user-chip .role {
+        color: #dcefe2;
+        font-size: 12.5px;
+      }
+      .nav-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .nav-item {
+        font-size: 12.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #bfe0cc;
+        margin: 10px 0 2px 4px;
+      }
+      .nav-btn {
+        text-align: left;
+        background: transparent;
+        border: none;
+        color: #e7f3ea;
+        padding: 8px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+      }
+      .nav-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .nav-btn.active {
+        background: #fff;
+        color: var(--green);
+        font-weight: 600;
+      }
+      .sidebar-foot {
+        margin-top: auto;
+        font-size: 12px;
+        color: #bfe0cc;
+        line-height: 1.5;
+      }
+      .logout-btn {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        padding: 7px 10px;
+        border-radius: 6px;
+        font-size: 13.5px;
+        cursor: pointer;
+      }
+      .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.22);
+      }
 
-  main{padding:28px 34px; max-width:1220px;}
-  .topbar{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; flex-wrap:wrap; gap:8px;}
-  .topbar h2{font-size:22px;}
-  .topbar .meta{font-size:12px; color:var(--ink-soft);}
-  .role-note{font-size:12.5px; color:var(--ink-soft); background:#EAF2EC; border-radius:6px; padding:9px 12px; margin:10px 0 22px 0;}
+      main {
+        padding: 28px 34px;
+        max-width: 1340px;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 6px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .topbar h2 {
+        font-size: 25px;
+      }
+      .topbar .meta {
+        font-size: 13.5px;
+        color: var(--ink-soft);
+      }
+      .role-note {
+        font-size: 14.5px;
+        color: var(--ink-soft);
+        background: #eaf2ec;
+        border-radius: 6px;
+        padding: 9px 12px;
+        margin: 10px 0 22px 0;
+      }
 
-  .kpi-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px;}
-  .kpi{background:var(--panel); border:1px solid var(--border); border-radius:9px; padding:15px 16px; border-top:3px solid var(--green);}
-  .kpi .num{font-family:'Lora',serif; font-size:25px; font-weight:700; color:var(--blue);}
-  .kpi .label{font-size:11.5px; color:var(--ink-soft); margin-top:3px;}
+      .kpi-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+      .kpi {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 15px 16px;
+        border-top: 3px solid var(--green);
+      }
+      .kpi .num {
+        font-family: "Lora", serif;
+        font-size: 28.5px;
+        font-weight: 700;
+        color: var(--blue);
+      }
+      .kpi .label {
+        font-size: 13px;
+        color: var(--ink-soft);
+        margin-top: 3px;
+      }
 
-  section{margin-bottom:28px;}
-  section > h3{font-size:15px; margin-bottom:10px; padding-bottom:7px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;}
-  section > h3 .hint{font-size:11px; color:var(--ink-soft); font-family:'Inter'; font-weight:400;}
+      section {
+        margin-bottom: 28px;
+      }
+      section > h3 {
+        font-size: 17px;
+        margin-bottom: 10px;
+        padding-bottom: 7px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      section > h3 .hint {
+        font-size: 12.5px;
+        color: var(--ink-soft);
+        font-family: "Open Sans";
+        font-weight: 400;
+      }
 
-  .alert-list{display:flex; flex-direction:column; gap:8px;}
-  .alert{
-    display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border-radius:7px;
-    border:1px solid var(--border); background:var(--panel);
-  }
-  .alert.critical{border-left:3px solid var(--red); background:var(--red-dim);}
-  .alert.warning{border-left:3px solid var(--saffron); background:var(--saffron-dim);}
-  .alert .tag{font-size:11px; font-weight:600; white-space:nowrap; padding:2px 8px; border-radius:10px; background:#fff;}
-  .alert.critical .tag{color:var(--red);}
-  .alert.warning .tag{color:var(--saffron);}
-  .alert .detail{font-size:13px; color:var(--ink);}
-  .alert .trial{font-size:11px; color:var(--ink-soft); display:block; margin-top:2px;}
+      .alert-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .alert {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 10px 12px;
+        border-radius: 7px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+      }
+      .alert.critical {
+        border-left: 3px solid var(--red);
+        background: var(--red-dim);
+      }
+      .alert.warning {
+        border-left: 3px solid var(--saffron);
+        background: var(--saffron-dim);
+      }
+      .alert .tag {
+        font-size: 12.5px;
+        font-weight: 600;
+        white-space: nowrap;
+        padding: 2px 8px;
+        border-radius: 10px;
+        background: #fff;
+      }
+      .alert.critical .tag {
+        color: var(--red);
+      }
+      .alert.warning .tag {
+        color: var(--saffron);
+      }
+      .alert .detail {
+        font-size: 15px;
+        color: var(--ink);
+      }
+      .alert .trial {
+        font-size: 12.5px;
+        color: var(--ink-soft);
+        display: block;
+        margin-top: 2px;
+      }
 
-  table{width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--border); border-radius:9px; overflow:hidden;}
-  th,td{padding:10px 12px; text-align:left; font-size:12.5px; border-bottom:1px solid var(--border); vertical-align:top;}
-  th{background:#EEF3EF; font-weight:600; color:var(--ink-soft); font-size:11px;}
-  tr:last-child td{border-bottom:none;}
-  .pill{padding:2px 9px; border-radius:10px; font-size:11px; font-weight:600; white-space:nowrap;}
-  .pill.active{background:#DCF0E2; color:var(--green);}
-  .pill.enrolling{background:#DDE7F5; color:var(--blue);}
-  .pill.closing{background:#EDEAF5; color:#5B3E9E;}
-  .pill.approved{background:#DCF0E2; color:var(--green);}
-  .pill.renewal{background:var(--red-dim); color:var(--red);}
-  .pill.consented{background:#DCF0E2; color:var(--green);}
-  .pill.withdrawn{background:var(--red-dim); color:var(--red);}
-  .pill.pending{background:var(--saffron-dim); color:var(--saffron);}
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        padding: 10px 12px;
+        text-align: left;
+        font-size: 14.5px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      th {
+        background: #eef3ef;
+        font-weight: 600;
+        color: var(--ink-soft);
+        font-size: 12.5px;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      .pill {
+        padding: 2px 9px;
+        border-radius: 10px;
+        font-size: 12.5px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .pill.active {
+        background: #dcf0e2;
+        color: var(--green);
+      }
+      .pill.enrolling {
+        background: #dde7f5;
+        color: var(--blue);
+      }
+      .pill.closing {
+        background: #edeaf5;
+        color: #5b3e9e;
+      }
+      .pill.approved {
+        background: #dcf0e2;
+        color: var(--green);
+      }
+      .pill.renewal {
+        background: var(--red-dim);
+        color: var(--red);
+      }
+      .pill.consented {
+        background: #dcf0e2;
+        color: var(--green);
+      }
+      .pill.withdrawn {
+        background: var(--red-dim);
+        color: var(--red);
+      }
+      .pill.pending {
+        background: var(--saffron-dim);
+        color: var(--saffron);
+      }
 
-  .signal-card{
-    background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--red);
-    border-radius:8px; padding:14px 16px; margin-bottom:10px;
-  }
-  .signal-card h4{font-family:'Inter'; font-size:14px; margin:0 0 4px 0;}
-  .signal-card .route{font-size:11px; color:var(--red); font-weight:600; margin-bottom:6px;}
-  .signal-card ul{margin:6px 0 0 18px; padding:0; font-size:12.5px; color:var(--ink-soft);}
-  .empty{color:var(--ink-soft); font-size:13px; padding:14px; background:var(--panel); border:1px dashed var(--border); border-radius:8px;}
+      .signal-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--red);
+        border-radius: 8px;
+        padding: 14px 16px;
+        margin-bottom: 10px;
+      }
+      .signal-card h4 {
+        font-family: "Open Sans";
+        font-size: 16px;
+        margin: 0 0 4px 0;
+      }
+      .signal-card .route {
+        font-size: 12.5px;
+        color: var(--red);
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .signal-card ul {
+        margin: 6px 0 0 18px;
+        padding: 0;
+        font-size: 14.5px;
+        color: var(--ink-soft);
+      }
+      .empty {
+        color: var(--ink-soft);
+        font-size: 15px;
+        padding: 14px;
+        background: var(--panel);
+        border: 1px dashed var(--border);
+        border-radius: 8px;
+      }
 
-  .form-grid{background:var(--panel); border:1px solid var(--border); border-radius:9px; padding:16px; display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
-  .form-grid label{font-size:12px; color:var(--ink-soft); display:flex; flex-direction:column; gap:4px;}
-  .form-grid input, .form-grid select{padding:7px 9px; border:1px solid var(--border); border-radius:5px; font-family:inherit; font-size:13px;}
-  .form-grid .full{grid-column:1/-1;}
-  .form-grid button{
-    background:var(--green); color:#fff; border:none; padding:9px 16px; border-radius:6px;
-    font-weight:600; cursor:pointer; font-size:13px; justify-self:start;
-  }
-  .form-grid button:hover{background:#155f38;}
-  .form-msg{font-size:12px; margin-top:4px;}
+      .form-grid {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 16px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .form-grid label {
+        font-size: 13.5px;
+        color: var(--ink-soft);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .form-grid input,
+      .form-grid select {
+        padding: 7px 9px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        font-family: inherit;
+        font-size: 15px;
+      }
+      .form-grid .full {
+        grid-column: 1/-1;
+      }
+      .form-grid button {
+        background: var(--green);
+        color: #fff;
+        border: none;
+        padding: 9px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 15px;
+        justify-self: start;
+      }
+      .form-grid button:hover {
+        background: #155f38;
+      }
+      .form-msg {
+        font-size: 13.5px;
+        margin-top: 4px;
+      }
 
-  .audit{font-size:12px; color:var(--ink-soft); max-height:180px; overflow:auto; background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:10px 14px;}
-  .audit div{padding:4px 0; border-bottom:1px solid var(--border);}
-  .audit div:last-child{border-bottom:none;}
+      .audit {
+        font-size: 13.5px;
+        color: var(--ink-soft);
+        max-height: 460px;
+        overflow: auto;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 14px;
+      }
+      .audit div {
+        padding: 4px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .audit div:last-child {
+        border-bottom: none;
+      }
 
-  .note{font-size:12px; color:var(--ink-soft); background:#EAF2EC; border-radius:6px; padding:10px 12px; margin-bottom:16px;}
+      .note {
+        font-size: 13.5px;
+        color: var(--ink-soft);
+        background: #eaf2ec;
+        border-radius: 6px;
+        padding: 10px 12px;
+        margin-bottom: 16px;
+      }
 
-  .integration-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:12px;}
-  .integration-card{background:var(--panel); border:1px solid var(--border); border-radius:9px; padding:14px;}
-  .integration-card .dot{display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--green); margin-right:6px;}
-  .integration-card h4{font-size:13px; margin-bottom:4px;}
-  .integration-card p{font-size:11.5px; color:var(--ink-soft); margin:4px 0 0 0;}
-  .btn-secondary{
-    background:var(--blue); color:#fff; border:none; padding:8px 14px; border-radius:6px;
-    font-size:12.5px; font-weight:600; cursor:pointer;
-  }
-  .btn-secondary:hover{background:#0d3260;}
+      .integration-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .integration-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 14px;
+      }
+      .integration-card .dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+        margin-right: 6px;
+      }
+      .integration-card h4 {
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+      .integration-card p {
+        font-size: 13px;
+        color: var(--ink-soft);
+        margin: 4px 0 0 0;
+      }
+      .btn-secondary {
+        background: var(--blue);
+        color: #fff;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 14.5px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .btn-secondary:hover {
+        background: #0d3260;
+      }
 
-  .export-row{display:flex; gap:10px; flex-wrap:wrap;}
-  .export-btn{
-    background:var(--panel); border:1px solid var(--border); border-radius:7px; padding:10px 14px;
-    font-size:12.5px; cursor:pointer; color:var(--ink); font-weight:600;
-  }
-  .export-btn:hover{border-color:var(--blue); color:var(--blue);}
+      .export-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .export-btn {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        padding: 10px 14px;
+        font-size: 14.5px;
+        cursor: pointer;
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .export-btn:hover {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
 
-  .compliance-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
-  .compliance-card{background:var(--panel); border:1px solid var(--border); border-radius:9px; padding:14px;}
-  .compliance-card h4{font-size:12.5px; color:var(--blue); margin-bottom:8px;}
-  .compliance-card p{font-size:11.5px; color:var(--ink-soft); margin:0 0 6px 0;}
-  .compliance-card .k{font-weight:600; color:var(--ink);}
+      .compliance-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .compliance-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 14px;
+      }
+      .compliance-card h4 {
+        font-size: 14.5px;
+        color: var(--blue);
+        margin-bottom: 8px;
+      }
+      .compliance-card p {
+        font-size: 13px;
+        color: var(--ink-soft);
+        margin: 0 0 6px 0;
+      }
+      .compliance-card .k {
+        font-weight: 600;
+        color: var(--ink);
+      }
 
-  .chain-badge{font-size:11px; font-weight:600; padding:3px 9px; border-radius:10px;}
-  .chain-badge.valid{background:#DCF0E2; color:var(--green);}
-  .chain-badge.invalid{background:var(--red-dim); color:var(--red);}
+      .chain-badge {
+        font-size: 12.5px;
+        font-weight: 600;
+        padding: 3px 9px;
+        border-radius: 10px;
+      }
+      .chain-badge.valid {
+        background: #dcf0e2;
+        color: var(--green);
+      }
+      .chain-badge.invalid {
+        background: var(--red-dim);
+        color: var(--red);
+      }
 
-  .consent-action{display:flex; gap:6px; align-items:center;}
-  .consent-action select{padding:4px 6px; font-size:11.5px; border:1px solid var(--border); border-radius:4px;}
-  .consent-action button{padding:4px 9px; font-size:11.5px; border:none; border-radius:4px; background:var(--blue); color:#fff; cursor:pointer;}
+      .consent-action {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .consent-action select {
+        padding: 4px 6px;
+        font-size: 13px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+      }
+      .consent-action button {
+        padding: 4px 9px;
+        font-size: 13px;
+        border: none;
+        border-radius: 4px;
+        background: var(--blue);
+        color: #fff;
+        cursor: pointer;
+      }
 
-  @media (max-width:900px){
-    .app{grid-template-columns:1fr;}
-    .sidebar{display:flex; flex-direction:row; align-items:center; overflow-x:auto;}
-    .kpi-row, .integration-row, .compliance-grid{grid-template-columns:1fr 1fr;}
-    .form-grid{grid-template-columns:1fr;}
-  }
-</style>
-</head>
-<body>
+      @keyframes fade {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes grow {
+        from {
+          width: 0;
+        }
+      }
+      @keyframes sweep {
+        from {
+          background-position: 200% 0;
+        }
+        to {
+          background-position: -200% 0;
+        }
+      }
+      main > div[id^="section-"] {
+        animation: fade 0.35s;
+      }
+      .logo {
+        width: 44px;
+        height: 44px;
+        background: #fff;
+        border-radius: 11px;
+        padding: 4px;
+        flex: none;
+        border: 1px solid var(--border);
+      }
+      .brand .logo {
+        width: 38px;
+        height: 38px;
+        border: none;
+      }
+      .brand-row {
+        display: flex;
+        gap: 11px;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .login-card {
+        max-width: 470px;
+      }
+      .role-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 9px;
+        margin: 6px 0 4px;
+      }
+      .login-card button.role-card {
+        width: auto;
+        margin: 0;
+        background: #fff;
+        color: var(--ink);
+        padding: 10px 11px;
+        border: 1px solid var(--border);
+        font-weight: 400;
+        text-align: left;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        transition: 0.15s;
+      }
+      .login-card button.role-card:hover {
+        background: #f1f8f3;
+        border-color: var(--green);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(27, 122, 70, 0.18);
+      }
+      .role-card .ic {
+        font-size: 24px;
+      }
+      .role-card b {
+        display: block;
+        font-size: 14.5px;
+      }
+      .role-card small {
+        color: var(--ink-soft);
+        font-size: 12px;
+      }
+      .badge {
+        float: right;
+        background: var(--saffron);
+        color: #fff;
+        border-radius: 10px;
+        padding: 0 7px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .kpi.bad {
+        border-top-color: var(--red);
+      }
+      .kpi.bad .num {
+        color: var(--red);
+      }
+      .kpi .bar {
+        margin-top: 8px;
+      }
+      .bar {
+        height: 7px;
+        background: #e5ece7;
+        border-radius: 5px;
+        overflow: hidden;
+        min-width: 90px;
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        background: var(--gradient);
+        border-radius: 5px;
+        animation: grow 1s;
+      }
+      .chips {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+      .chip {
+        border: 1px solid var(--border);
+        background: #fff;
+        border-radius: 16px;
+        padding: 4px 12px;
+        font-size: 13.5px;
+        cursor: pointer;
+      }
+      .chip.on {
+        background: var(--blue);
+        color: #fff;
+        border-color: var(--blue);
+      }
+      .hm {
+        display: block;
+        text-align: center;
+        padding: 6px 4px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .h0 {
+        background: #dcf0e2;
+        color: var(--green);
+      }
+      .h1 {
+        background: var(--saffron-dim);
+        color: #a8641a;
+      }
+      .h2 {
+        background: var(--red-dim);
+        color: var(--red);
+      }
+      .ring {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: conic-gradient(var(--c) calc(var(--p) * 1%), #e5ece7 0);
+        position: relative;
+      }
+      .ring::after {
+        content: "";
+        position: absolute;
+        inset: 4px;
+        background: #fff;
+        border-radius: 50%;
+      }
+      .ring span {
+        position: relative;
+        z-index: 1;
+        font-weight: 700;
+        font-size: 12.5px;
+      }
+      .charts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+      .chart-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 14px;
+      }
+      .chart-card h4 {
+        font-family: "Open Sans";
+        font-size: 14.5px;
+        margin-bottom: 8px;
+        color: var(--ink-soft);
+      }
+      .hb {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr 20px;
+        gap: 8px;
+        align-items: center;
+        font-size: 13px;
+        margin: 7px 0;
+      }
+      .donut {
+        width: 112px;
+        height: 112px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        position: relative;
+        margin: 4px auto 8px;
+      }
+      .donut::after {
+        content: "";
+        position: absolute;
+        inset: 23px;
+        background: #fff;
+        border-radius: 50%;
+      }
+      .donut span {
+        position: relative;
+        z-index: 1;
+        font: 700 21px Lora;
+        color: var(--blue);
+        text-align: center;
+        line-height: 1;
+      }
+      .donut small {
+        display: block;
+        font: 400 10px "Open Sans";
+        color: var(--ink-soft);
+      }
+      .legend {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        font-size: 12.5px;
+        color: var(--ink-soft);
+      }
+      .legend i {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 4px;
+      }
+      .signal-card {
+        animation: fade 0.4s;
+      }
+      .scanning {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(46, 157, 93, 0.28),
+          transparent
+        );
+        background-size: 200% 100%;
+        animation: sweep 1.5s linear;
+      }
+      .form-grid.sae {
+        border-color: var(--red);
+        box-shadow: 0 0 0 3px var(--red-dim);
+      }
+      .sae-banner {
+        background: var(--red-dim);
+        color: var(--red);
+        font-weight: 600;
+        font-size: 14.5px;
+        padding: 9px 12px;
+        border-radius: 6px;
+      }
+      .ar {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .ai {
+        font-size: 18.5px;
+      }
+      .at {
+        display: block;
+      }
+      .ago {
+        color: var(--saffron);
+        font-weight: 600;
+        margin-left: 6px;
+      }
+      #auditQ {
+        width: 100%;
+        padding: 8px 11px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        margin-bottom: 10px;
+        font-family: inherit;
+      }
+      .toast {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        background: var(--blue);
+        color: #fff;
+        padding: 11px 16px;
+        border-radius: 8px;
+        font-size: 15px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        z-index: 9;
+        animation: fade 0.3s;
+      }
 
-<div id="loginScreen">
-  <div class="login-card">
-    <div class="tag">Ministry of Ayush · AIIA</div>
-    <h1>AIIA CTMS</h1>
-    <p class="sub">Clinical Trial Portfolio &amp; Pharmacovigilance — sign in to continue</p>
-    <form id="loginForm">
-      <label>Role</label>
-      <select id="loginUsername">
-        <option value="investigator">Investigator — Dr. R. Sharma</option>
-        <option value="coordinator">Study Coordinator — S. Verma</option>
-        <option value="ethics">Ethics Committee</option>
-        <option value="pv">Pharmacovigilance (NPvCC)</option>
-        <option value="leadership">Institutional Leadership</option>
-        <option value="regulator">Regulator (read-only)</option>
-      </select>
-      <label>Password</label>
-      <input type="password" id="loginPassword" value="sih2026" required>
-      <button type="submit">Sign in</button>
-      <div class="login-error" id="loginError"></div>
-    </form>
-    <div class="login-hint">Demo credentials: any role above, password <strong>sih2026</strong>. A real deployment issues per-user institutional accounts.</div>
-  </div>
-</div>
+      @keyframes fill {
+        to {
+          width: 100%;
+        }
+      }
+      /* ===== SPLASH FONT SETTINGS — change fonts / sizes / weights HERE ===== */
+      #splash {
+        --pill-font: "Open Sans", sans-serif;
+        --pill-size: 14px;
+        --pill-weight: 600;
+        --sa-font: "Open Sans", "Noto Sans Devanagari", sans-serif;
+        --sa-size: clamp(26px, 4.4vw, 50px);
+        --sa-weight: 700;
+        --sa-line: 1.55;
+        --en-font: "Open Sans", sans-serif;
+        --en-size: clamp(16px, 2vw, 22px);
+        --en-weight: 400;
+        --en-style: italic;
+        --brand-font: "Open Sans", sans-serif;
+        --brand-size: 20px;
+        --brand-weight: 700;
+        --brand-space: 0.06em;
+      }
+      /* ===== end of font settings ===== */
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+        padding: 24px;
+        cursor: pointer;
+        background:
+          radial-gradient(
+            ellipse at 50% 40%,
+            rgba(255, 255, 255, 0.14),
+            transparent 60%
+          ),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' stroke='white' stroke-opacity='.17' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M18 62C18 38 34 22 58 20c2 25-13 42-40 42zM22 58 52 28'/%3E%3Cpath d='M118 40c14-14 34-14 44-8-4 16-22 26-44 8zM122 38l32-4'/%3E%3Ccircle cx='96' cy='108' r='11'/%3E%3Cpath d='M96 97v-10M96 119v10M85 108H75M107 108h10'/%3E%3Cpath d='M30 128c10-8 26-6 34 4-10 10-26 8-34-4zM34 130l26 2'/%3E%3Crect x='128' y='118' width='34' height='16' rx='8' transform='rotate%28-30 145 126%29'/%3E%3C/svg%3E"),
+          var(--gradient);
+        transition:
+          opacity 0.7s,
+          transform 0.7s;
+      }
+      #splash.out {
+        opacity: 0;
+        transform: scale(1.03);
+        pointer-events: none;
+      }
+      .sp-in {
+        opacity: 0;
+        animation: fade 0.9s ease forwards;
+      }
+      #splash .logo {
+        width: 74px;
+        height: 74px;
+        padding: 7px;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+        margin-bottom: 16px;
+      }
+      .sp-pill {
+        display: inline-block;
+        background: #fff;
+        color: var(--green);
+        font-family: var(--pill-font);
+        font-weight: var(--pill-weight);
+        font-size: var(--pill-size);
+        padding: 5px 16px;
+        border-radius: 6px;
+        letter-spacing: 0.02em;
+      }
+      .sp-sa {
+        font-family: var(--sa-font);
+        font-weight: var(--sa-weight);
+        font-size: var(--sa-size);
+        line-height: var(--sa-line);
+        margin: 22px 0 4px;
+        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.25);
+      }
+      .sp-en {
+        font-family: var(--en-font);
+        font-style: var(--en-style);
+        font-weight: var(--en-weight);
+        font-size: var(--en-size);
+        opacity: 0.94;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      .sp-line {
+        width: 70px;
+        height: 2px;
+        background: var(--saffron);
+        margin: 22px auto;
+        border-radius: 2px;
+      }
+      .sp-brand {
+        font-family: var(--brand-font);
+        font-size: var(--brand-size);
+        font-weight: var(--brand-weight);
+        letter-spacing: var(--brand-space);
+      }
+      .sp-bar {
+        width: 190px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 3px;
+        margin: 22px auto 8px;
+        overflow: hidden;
+      }
+      .sp-bar i {
+        display: block;
+        height: 100%;
+        background: #fff;
+        width: 0;
+        animation: fill 4.6s linear forwards;
+      }
+      .sp-hint {
+        font-size: 11px;
+        opacity: 0.7;
+      }
 
-<div class="app" id="app">
-  <aside class="sidebar">
-    <div class="brand">
-      <h1>AIIA CTMS</h1>
-      <span>Ministry of Ayush — Clinical Trial Portfolio</span>
-    </div>
-    <div class="user-chip">
-      <span class="name" id="chipName"></span>
-      <span class="role" id="chipRole"></span>
-    </div>
-    <div class="nav-list">
-      <div class="nav-item">Overview</div>
-      <button class="nav-btn active" data-section="overview">Portfolio &amp; Alerts</button>
-      <div class="nav-item">Safety</div>
-      <button class="nav-btn" data-section="pv">Pharmacovigilance</button>
-      <div class="nav-item">Compliance</div>
-      <button class="nav-btn" data-section="consent">Subjects &amp; Consent</button>
-      <button class="nav-btn" data-section="esign">E-Signatures</button>
-      <button class="nav-btn" data-section="export">CDISC Export</button>
-      <button class="nav-btn" data-section="integrations">Integrations</button>
-      <button class="nav-btn" data-section="security">Security Posture</button>
-      <button class="nav-btn" data-section="audit">Audit Trail</button>
-    </div>
-    <div class="sidebar-foot">
-      SIH Problem Statement 46 — prototype.<br>Synthetic data only, not real patient records.
-      <div style="margin-top:10px;"><button class="logout-btn" id="logoutBtn">Log out</button></div>
-    </div>
-  </aside>
+      @media (max-width: 900px) {
+        .charts {
+          grid-template-columns: 1fr;
+        }
+        .app {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          overflow-x: auto;
+        }
+        .kpi-row,
+        .integration-row,
+        .compliance-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#2E9D5D" />
+          <stop offset="1" stop-color="#123F7B" />
+        </linearGradient>
+      </defs>
+      <symbol id="logo" viewBox="0 0 48 48">
+        <path d="M8 40C8 20 20 8 41 7c1 21-10 34-33 33z" fill="url(#lg)" />
+        <path
+          d="M11 31h5l4-8 5 13 4-9h6"
+          fill="none"
+          stroke="#fff"
+          stroke-width="2.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <circle cx="35" cy="27" r="3" fill="#DB8A2C" />
+      </symbol>
+    </svg>
 
-  <main>
-    <div class="topbar">
-      <h2 id="roleTitle">Dashboard</h2>
-      <span class="meta" id="asOf"></span>
-    </div>
-    <div class="role-note" id="roleNote"></div>
-
-    <div id="section-overview">
-      <div class="kpi-row" id="kpiRow"></div>
-      <section>
-        <h3>Alerts</h3>
-        <div class="alert-list" id="alertList"></div>
-      </section>
-      <section>
-        <h3>Trial Portfolio</h3>
-        <table>
-          <thead><tr><th>Study</th><th>Phase</th><th>Status</th><th>Enrollment</th><th>CTRI</th><th>Ethics</th></tr></thead>
-          <tbody id="trialTable"></tbody>
-        </table>
-      </section>
-    </div>
-
-    <div id="section-pv" style="display:none;">
-      <section>
-        <h3>Pharmacovigilance Signals <span class="hint">Isolation Forest anomaly model</span></h3>
-        <div id="signalList"></div>
-      </section>
-      <section id="aeFormSection">
-        <h3>Log an Adverse Event</h3>
-        <form class="form-grid" id="aeForm">
-          <label>Trial<select name="trial_id" id="trialSelect"></select></label>
-          <label>Site<input name="site" placeholder="e.g. AIIA Delhi" required></label>
-          <label>Symptom<input name="symptom" placeholder="e.g. Nausea" required></label>
-          <label>Severity
-            <select name="severity"><option>Mild</option><option>Moderate</option><option>Severe</option></select>
-          </label>
-          <label>Serious Adverse Event?
-            <select name="serious"><option value="false">No</option><option value="true">Yes</option></select>
-          </label>
-          <label>MedDRA code (optional)<input name="meddra_code" placeholder="e.g. 10028813"></label>
-          <div class="full">
-            <button type="submit">Log AE report</button>
-            <div class="form-msg" id="formMsg"></div>
-          </div>
-        </form>
-      </section>
-    </div>
-
-    <div id="section-consent" style="display:none;">
-      <section>
-        <h3>Subjects &amp; DPDP Consent <span class="hint">Identity masked unless role has clinical need</span></h3>
-        <table>
-          <thead><tr><th>Subject</th><th>Age/Sex</th><th>Arm</th><th>Site</th><th>ABHA ID</th><th>Consent</th><th></th></tr></thead>
-          <tbody id="subjectsTable"></tbody>
-        </table>
-      </section>
-    </div>
-
-    <div id="section-esign" style="display:none;">
-      <section id="esignFormSection">
-        <h3>Capture Electronic Signature <span class="hint">Hash-chained, tamper-evident ledger</span></h3>
-        <form class="form-grid" id="esignForm">
-          <label>Meaning of signature<input name="meaning" placeholder="e.g. Confirmed monitoring visit completed" required></label>
-          <label>Record type
-            <select name="record_type"><option value="trial">Trial</option><option value="monitoring_visit">Monitoring Visit</option><option value="ethics_approval">Ethics Approval</option><option value="consent">Consent</option></select>
-          </label>
-          <label>Record ID<input name="record_id" placeholder="e.g. AIIA-CT-001" required></label>
-          <div class="full">
-            <button type="submit">Sign</button>
-            <div class="form-msg" id="esignMsg"></div>
-          </div>
-        </form>
-      </section>
-      <section>
-        <h3>Signature Ledger <span class="chain-badge" id="chainBadge"></span></h3>
-        <table>
-          <thead><tr><th>Timestamp</th><th>Actor</th><th>Meaning</th><th>Record</th><th>Hash</th></tr></thead>
-          <tbody id="esignTable"></tbody>
-        </table>
-      </section>
-    </div>
-
-    <div id="section-export" style="display:none;">
-      <section>
-        <h3>CDISC-Aligned Export <span class="hint">SDTM / ADaM / Define-XML</span></h3>
-        <div class="export-row">
-          <button class="export-btn" data-export="sdtm/dm" data-name="DM.csv">Download SDTM DM (demographics)</button>
-          <button class="export-btn" data-export="sdtm/ae" data-name="AE.csv">Download SDTM AE (adverse events)</button>
-          <button class="export-btn" data-export="adam/adae" data-name="ADAE.csv">Download ADaM ADAE (analysis)</button>
-          <button class="export-btn" data-export="define-xml" data-name="define.xml">Download Define-XML</button>
+    <div id="splash">
+      <div>
+        <svg class="logo sp-in"><use href="#logo" /></svg><br />
+        <span class="sp-pill sp-in" style="animation-delay: 0.2s"
+          >Ministry of Ayush · AIIA</span
+        >
+        <div class="sp-sa sp-in" style="animation-delay: 0.6s">
+          आयुर्वेदस्य ज्ञानं, तन्त्रज्ञानस्य संगमः।
         </div>
-        <div class="note" style="margin-top:14px;">These are correctly-shaped SDTM/ADaM domains and an illustrative Define-XML — a demonstration that the data model is CDISC-aware, not a Pinnacle 21-validated submission package.</div>
-      </section>
+        <div class="sp-en sp-in" style="animation-delay: 1.2s">
+          The wisdom of Ayurveda, united with technology.
+        </div>
+        <div class="sp-line sp-in" style="animation-delay: 1.8s"></div>
+        <div class="sp-brand bn sp-in" style="animation-delay: 2s"></div>
+        <div class="sp-bar"><i></i></div>
+        <div class="sp-hint">Click anywhere to continue</div>
+      </div>
     </div>
 
-    <div id="section-integrations" style="display:none;">
-      <section>
-        <h3>External Integrations <span class="hint">Simulated — architecture is real, credentials are not</span></h3>
-        <div class="integration-row" id="integrationRow"></div>
-        <button class="btn-secondary" id="edcSyncBtn">Sync from EDC (simulate)</button>
-        <div class="form-msg" id="edcMsg"></div>
-      </section>
+    <div id="loginScreen">
+      <div class="login-card">
+        <div class="brand-row">
+          <svg class="logo"><use href="#logo" /></svg>
+          <div>
+            <div class="tag">Ministry of Ayush · AIIA</div>
+            <h1 class="bn"></h1>
+          </div>
+        </div>
+        <p class="sub">
+          Trace every trial. Protect every patient. Choose your role to sign in.
+        </p>
+        <form id="loginForm">
+          <input type="hidden" id="loginUsername" value="pv" />
+          <div class="role-grid" id="roleGrid"></div>
+          <label>Password</label>
+          <input type="password" id="loginPassword" value="sih2026" required />
+          <div class="login-error" id="loginError"></div>
+        </form>
+        <div class="login-hint">
+          Demo credentials: any role above, password <strong>sih2026</strong>. A
+          real deployment issues per-user institutional accounts.
+        </div>
+      </div>
     </div>
 
-    <div id="section-security" style="display:none;">
-      <section>
-        <h3>Security &amp; Compliance Posture</h3>
-        <div class="compliance-grid" id="complianceGrid"></div>
-      </section>
+    <div class="app" id="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-row" style="margin: 0">
+            <svg class="logo"><use href="#logo" /></svg>
+            <div>
+              <h1 class="bn"></h1>
+              <span>Ministry of Ayush · AIIA</span>
+            </div>
+          </div>
+        </div>
+        <div class="user-chip">
+          <span class="name" id="chipName"></span>
+          <span class="role" id="chipRole"></span>
+        </div>
+        <div class="nav-list">
+          <div class="nav-item">Overview</div>
+          <button class="nav-btn active" data-section="overview">
+            Portfolio &amp; Alerts
+          </button>
+          <div class="nav-item">Safety</div>
+          <button class="nav-btn" data-section="pv">Pharmacovigilance</button>
+          <div class="nav-item">Compliance</div>
+          <button class="nav-btn" data-section="consent">
+            Subjects &amp; Consent
+          </button>
+          <button class="nav-btn" data-section="esign">E-Signatures</button>
+          <button class="nav-btn" data-section="export">CDISC Export</button>
+          <button class="nav-btn" data-section="integrations">
+            Integrations
+          </button>
+          <button class="nav-btn" data-section="security">
+            Security Posture
+          </button>
+          <button class="nav-btn" data-section="audit">Audit Trail</button>
+        </div>
+        <div class="sidebar-foot">
+          SIH Problem Statement 46 — prototype.<br />Synthetic data only, not
+          real patient records.
+          <div style="margin-top: 10px">
+            <button class="logout-btn" id="logoutBtn">Log out</button>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <div class="topbar">
+          <h2 id="roleTitle">Dashboard</h2>
+          <span class="meta" id="asOf"></span>
+        </div>
+        <div class="role-note" id="roleNote"></div>
+
+        <div id="section-overview">
+          <div class="kpi-row" id="kpiRow"></div>
+          <section>
+            <h3>
+              Portfolio Risk Heatmap
+              <span class="hint"
+                >Live from trial data · hover a cell for detail</span
+              >
+            </h3>
+            <div id="heatmap"></div>
+          </section>
+          <section>
+            <h3>Alerts</h3>
+            <div class="alert-list" id="alertList"></div>
+          </section>
+          <section>
+            <h3>Trial Portfolio</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Study</th>
+                  <th>Phase</th>
+                  <th>Status</th>
+                  <th>Enrollment</th>
+                  <th>CTRI</th>
+                  <th>Ethics</th>
+                </tr>
+              </thead>
+              <tbody id="trialTable"></tbody>
+            </table>
+          </section>
+        </div>
+
+        <div id="section-pv" style="display: none">
+          <div class="charts" id="pvCharts"></div>
+          <section>
+            <h3>
+              Pharmacovigilance Signals
+              <span class="hint">Isolation Forest anomaly model</span>
+            </h3>
+            <div id="signalList"></div>
+          </section>
+          <section id="aeFormSection">
+            <h3>Log an Adverse Event</h3>
+            <form class="form-grid" id="aeForm">
+              <label
+                >Trial<select name="trial_id" id="trialSelect"></select
+              ></label>
+              <label>Site<select name="site" id="siteSelect"></select></label>
+              <label
+                >Symptom<input
+                  name="symptom"
+                  id="symInput"
+                  list="symList"
+                  placeholder="e.g. Nausea"
+                  required
+                  autocomplete="off" /><datalist id="symList"></datalist
+              ></label>
+              <label
+                >Severity
+                <select name="severity">
+                  <option>Mild</option>
+                  <option>Moderate</option>
+                  <option>Severe</option>
+                </select>
+              </label>
+              <label
+                >Serious Adverse Event?
+                <select name="serious">
+                  <option value="false">No</option>
+                  <option value="true">Yes</option>
+                </select>
+              </label>
+              <label
+                >MedDRA code (optional)<input
+                  name="meddra_code"
+                  id="meddraInput"
+                  placeholder="auto-fills from symptom"
+              /></label>
+              <div
+                class="full sae-banner"
+                id="saeBanner"
+                style="display: none"
+              ></div>
+              <div class="full">
+                <button type="submit">Log AE report</button>
+                <div class="form-msg" id="formMsg"></div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div id="section-consent" style="display: none">
+          <section>
+            <h3>
+              Subjects &amp; DPDP Consent
+              <span class="hint"
+                >Identity masked unless role has clinical need</span
+              >
+            </h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Age/Sex</th>
+                  <th>Arm</th>
+                  <th>Site</th>
+                  <th>ABHA ID</th>
+                  <th>Consent</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="subjectsTable"></tbody>
+            </table>
+          </section>
+        </div>
+
+        <div id="section-esign" style="display: none">
+          <section id="esignFormSection">
+            <h3>
+              Capture Electronic Signature
+              <span class="hint">Hash-chained, tamper-evident ledger</span>
+            </h3>
+            <form class="form-grid" id="esignForm">
+              <label
+                >Meaning of signature<input
+                  name="meaning"
+                  placeholder="e.g. Confirmed monitoring visit completed"
+                  required
+              /></label>
+              <label
+                >Record type
+                <select name="record_type">
+                  <option value="trial">Trial</option>
+                  <option value="monitoring_visit">Monitoring Visit</option>
+                  <option value="ethics_approval">Ethics Approval</option>
+                  <option value="consent">Consent</option>
+                </select>
+              </label>
+              <label
+                >Record ID<input
+                  name="record_id"
+                  placeholder="e.g. AIIA-CT-001"
+                  required
+              /></label>
+              <div class="full">
+                <button type="submit">Sign</button>
+                <div class="form-msg" id="esignMsg"></div>
+              </div>
+            </form>
+          </section>
+          <section>
+            <h3>
+              Signature Ledger <span class="chain-badge" id="chainBadge"></span>
+            </h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Actor</th>
+                  <th>Meaning</th>
+                  <th>Record</th>
+                  <th>Hash</th>
+                </tr>
+              </thead>
+              <tbody id="esignTable"></tbody>
+            </table>
+          </section>
+        </div>
+
+        <div id="section-export" style="display: none">
+          <section>
+            <h3>
+              CDISC-Aligned Export
+              <span class="hint">SDTM / ADaM / Define-XML</span>
+            </h3>
+            <div class="export-row">
+              <button
+                class="export-btn"
+                data-export="sdtm/dm"
+                data-name="DM.csv"
+              >
+                Download SDTM DM (demographics)
+              </button>
+              <button
+                class="export-btn"
+                data-export="sdtm/ae"
+                data-name="AE.csv"
+              >
+                Download SDTM AE (adverse events)
+              </button>
+              <button
+                class="export-btn"
+                data-export="adam/adae"
+                data-name="ADAE.csv"
+              >
+                Download ADaM ADAE (analysis)
+              </button>
+              <button
+                class="export-btn"
+                data-export="define-xml"
+                data-name="define.xml"
+              >
+                Download Define-XML
+              </button>
+            </div>
+            <div class="note" style="margin-top: 14px">
+              These are correctly-shaped SDTM/ADaM domains and an illustrative
+              Define-XML — a demonstration that the data model is CDISC-aware,
+              not a Pinnacle 21-validated submission package.
+            </div>
+          </section>
+        </div>
+
+        <div id="section-integrations" style="display: none">
+          <section>
+            <h3>
+              External Integrations
+              <span class="hint"
+                >Simulated — architecture is real, credentials are not</span
+              >
+            </h3>
+            <div class="integration-row" id="integrationRow"></div>
+            <button class="btn-secondary" id="edcSyncBtn">
+              Sync from EDC (simulate)
+            </button>
+            <div class="form-msg" id="edcMsg"></div>
+          </section>
+        </div>
+
+        <div id="section-security" style="display: none">
+          <section>
+            <h3>Security &amp; Compliance Posture</h3>
+            <div class="compliance-grid" id="complianceGrid"></div>
+          </section>
+        </div>
+
+        <div id="section-audit" style="display: none">
+          <section>
+            <h3>
+              Audit Trail
+              <span class="hint">Immutable, time-stamped (ALCOA+)</span>
+            </h3>
+            <input
+              id="auditQ"
+              placeholder="Filter audit trail (user, action, trial)…"
+            />
+            <div class="audit" id="auditLog"></div>
+          </section>
+        </div>
+      </main>
     </div>
 
-    <div id="section-audit" style="display:none;">
-      <section>
-        <h3>Audit Trail <span class="hint">Immutable, time-stamped (ALCOA+)</span></h3>
-        <div class="audit" id="auditLog"></div>
-      </section>
-    </div>
-  </main>
-</div>
+    <script>
+      const API = "http://localhost:5000/api";
+      let TOKEN = localStorage.getItem("aiia_token");
+      let ROLE_KEY = localStorage.getItem("aiia_role_key");
+      let ROLE_NAME = localStorage.getItem("aiia_role_name");
+      let ROLE_LABEL = localStorage.getItem("aiia_role_label");
 
-<script>
-const API = "http://localhost:5000/api";
-let TOKEN = localStorage.getItem("aiia_token");
-let ROLE_KEY = localStorage.getItem("aiia_role_key");
-let ROLE_NAME = localStorage.getItem("aiia_role_name");
-let ROLE_LABEL = localStorage.getItem("aiia_role_label");
+      const WRITE_ROLES = {
+        ae: ["investigator", "coordinator", "pv"],
+        consent: ["investigator", "coordinator", "ethics"],
+        esign: ["investigator", "coordinator", "ethics", "pv", "leadership"],
+        edc: ["coordinator", "pv", "leadership"],
+      };
 
-const WRITE_ROLES = { ae: ["investigator","coordinator","pv"], consent: ["investigator","coordinator","ethics"], esign: ["investigator","coordinator","ethics","pv","leadership"], edc: ["coordinator","pv","leadership"] };
+      function pillClass(status) {
+        const m = {
+          Active: "active",
+          Enrolling: "enrolling",
+          "Closing Out": "closing",
+          Approved: "approved",
+          "Renewal Due": "renewal",
+          Consented: "consented",
+          Withdrawn: "withdrawn",
+          Pending: "pending",
+        };
+        return m[status] || "active";
+      }
 
-function pillClass(status){
-  const m = {Active:"active", Enrolling:"enrolling", "Closing Out":"closing", Approved:"approved", "Renewal Due":"renewal", Consented:"consented", Withdrawn:"withdrawn", Pending:"pending"};
-  return m[status] || "active";
-}
+      async function api(path, opts = {}) {
+        const headers = Object.assign({}, opts.headers, {
+          Authorization: "Bearer " + TOKEN,
+        });
+        const res = await fetch(
+          API + path,
+          Object.assign({}, opts, { headers }),
+        );
+        if (res.status === 401) {
+          doLogout();
+          throw new Error("session expired");
+        }
+        if (!res.ok) {
+          const err = await res
+            .json()
+            .catch(() => ({ error: "request failed" }));
+          throw new Error(err.error || "request failed");
+        }
+        return res;
+      }
+      async function apiJSON(path, opts = {}) {
+        return (await api(path, opts)).json();
+      }
 
-async function api(path, opts={}){
-  const headers = Object.assign({}, opts.headers, {"Authorization": "Bearer " + TOKEN});
-  const res = await fetch(API + path, Object.assign({}, opts, {headers}));
-  if(res.status === 401){ doLogout(); throw new Error("session expired"); }
-  if(!res.ok){ const err = await res.json().catch(()=>({error:"request failed"})); throw new Error(err.error || "request failed"); }
-  return res;
-}
-async function apiJSON(path, opts={}){ return (await api(path, opts)).json(); }
+      // ---------- Login ----------
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("loginUsername").value;
+          const password = document.getElementById("loginPassword").value;
+          const errEl = document.getElementById("loginError");
+          try {
+            const res = await fetch(API + "/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            });
+            if (!res.ok) {
+              const d = await res.json();
+              errEl.textContent = d.error || "Login failed";
+              return;
+            }
+            const data = await res.json();
+            TOKEN = data.token;
+            ROLE_KEY = username;
+            ROLE_NAME = data.name;
+            ROLE_LABEL = data.role;
+            localStorage.setItem("aiia_token", TOKEN);
+            localStorage.setItem("aiia_role_key", ROLE_KEY);
+            localStorage.setItem("aiia_role_name", ROLE_NAME);
+            localStorage.setItem("aiia_role_label", ROLE_LABEL);
+            showApp();
+          } catch (err) {
+            errEl.textContent =
+              "Could not reach the backend. Is 'python app.py' running?";
+          }
+        });
 
-// ---------- Login ----------
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const username = document.getElementById("loginUsername").value;
-  const password = document.getElementById("loginPassword").value;
-  const errEl = document.getElementById("loginError");
-  try{
-    const res = await fetch(API + "/login", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({username, password})});
-    if(!res.ok){ const d = await res.json(); errEl.textContent = d.error || "Login failed"; return; }
-    const data = await res.json();
-    TOKEN = data.token; ROLE_KEY = username; ROLE_NAME = data.name; ROLE_LABEL = data.role;
-    localStorage.setItem("aiia_token", TOKEN);
-    localStorage.setItem("aiia_role_key", ROLE_KEY);
-    localStorage.setItem("aiia_role_name", ROLE_NAME);
-    localStorage.setItem("aiia_role_label", ROLE_LABEL);
-    showApp();
-  }catch(err){
-    errEl.textContent = "Could not reach the backend. Is 'python app.py' running?";
-  }
-});
+      document.getElementById("logoutBtn").addEventListener("click", doLogout);
+      function doLogout() {
+        if (TOKEN) {
+          fetch(API + "/logout", {
+            method: "POST",
+            headers: { Authorization: "Bearer " + TOKEN },
+          }).catch(() => {});
+        }
+        localStorage.removeItem("aiia_token");
+        localStorage.removeItem("aiia_role_key");
+        localStorage.removeItem("aiia_role_name");
+        localStorage.removeItem("aiia_role_label");
+        TOKEN = null;
+        document.getElementById("app").classList.remove("visible");
+        document.getElementById("loginScreen").style.display = "flex";
+      }
 
-document.getElementById("logoutBtn").addEventListener("click", doLogout);
-function doLogout(){
-  if(TOKEN){ fetch(API+"/logout", {method:"POST", headers:{"Authorization":"Bearer "+TOKEN}}).catch(()=>{}); }
-  localStorage.removeItem("aiia_token"); localStorage.removeItem("aiia_role_key");
-  localStorage.removeItem("aiia_role_name"); localStorage.removeItem("aiia_role_label");
-  TOKEN = null;
-  document.getElementById("app").classList.remove("visible");
-  document.getElementById("loginScreen").style.display = "flex";
-}
+      function showApp() {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("app").classList.add("visible");
+        document.getElementById("chipName").textContent = ROLE_NAME;
+        document.getElementById("chipRole").textContent = ROLE_LABEL;
+        applyRoleVisibility();
+        loadAll();
+      }
 
-function showApp(){
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("app").classList.add("visible");
-  document.getElementById("chipName").textContent = ROLE_NAME;
-  document.getElementById("chipRole").textContent = ROLE_LABEL;
-  applyRoleVisibility();
-  loadAll();
-}
+      // ---------- Navigation ----------
+      document.querySelectorAll(".nav-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".nav-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          document
+            .querySelectorAll("main > div[id^='section-']")
+            .forEach((s) => (s.style.display = "none"));
+          document.getElementById(
+            "section-" + btn.dataset.section,
+          ).style.display = "block";
+          document.getElementById("roleTitle").textContent =
+            btn.firstChild.textContent.trim();
+        });
+      });
 
-// ---------- Navigation ----------
-document.querySelectorAll(".nav-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    document.querySelectorAll("main > div[id^='section-']").forEach(s => s.style.display = "none");
-    document.getElementById("section-" + btn.dataset.section).style.display = "block";
-  });
-});
+      // ---------- Role-based visibility ----------
+      function applyRoleVisibility() {
+        const roleInfo = {
+          investigator:
+            "Showing studies where this Investigator is listed as PI. Full write access for AE logging, consent, and e-signatures.",
+          coordinator:
+            "Day-to-day operations view: AE logging, consent updates, EDC sync, and e-signatures.",
+          ethics:
+            "Institutional Ethics Committee view: consent oversight and e-signature authority over ethics approvals.",
+          pv: "NPvCC Pharmacovigilance view: signal detection, AE review, and integrations are the primary focus here.",
+          leadership:
+            "Institutional Leadership view: full portfolio, compliance posture, and integration status across all studies.",
+          regulator:
+            "Read-only regulator view. All write actions (AE logging, consent, e-signatures, EDC sync) are disabled — enforced by the backend, not just hidden in the UI.",
+        };
+        document.getElementById("roleTitle").textContent = "Portfolio & Alerts";
+        document.getElementById("roleNote").textContent =
+          roleInfo[ROLE_KEY] || "";
 
-// ---------- Role-based visibility ----------
-function applyRoleVisibility(){
-  const roleInfo = {
-    investigator: "Showing studies where this Investigator is listed as PI. Full write access for AE logging, consent, and e-signatures.",
-    coordinator: "Day-to-day operations view: AE logging, consent updates, EDC sync, and e-signatures.",
-    ethics: "Institutional Ethics Committee view: consent oversight and e-signature authority over ethics approvals.",
-    pv: "NPvCC Pharmacovigilance view: signal detection, AE review, and integrations are the primary focus here.",
-    leadership: "Institutional Leadership view: full portfolio, compliance posture, and integration status across all studies.",
-    regulator: "Read-only regulator view. All write actions (AE logging, consent, e-signatures, EDC sync) are disabled — enforced by the backend, not just hidden in the UI.",
-  };
-  document.getElementById("roleTitle").textContent = ROLE_LABEL + " Dashboard";
-  document.getElementById("roleNote").textContent = roleInfo[ROLE_KEY] || "";
+        document.getElementById("aeFormSection").style.display =
+          WRITE_ROLES.ae.includes(ROLE_KEY) ? "block" : "none";
+        document.getElementById("esignFormSection").style.display =
+          WRITE_ROLES.esign.includes(ROLE_KEY) ? "block" : "none";
+        document.getElementById("edcSyncBtn").style.display =
+          WRITE_ROLES.edc.includes(ROLE_KEY) ? "inline-block" : "none";
+      }
 
-  document.getElementById("aeFormSection").style.display = WRITE_ROLES.ae.includes(ROLE_KEY) ? "block" : "none";
-  document.getElementById("esignFormSection").style.display = WRITE_ROLES.esign.includes(ROLE_KEY) ? "block" : "none";
-  document.getElementById("edcSyncBtn").style.display = WRITE_ROLES.edc.includes(ROLE_KEY) ? "inline-block" : "none";
-}
+      // ---------- Renderers ----------
+      function renderKPIs(k) {
+        document.getElementById("asOf").textContent = "As of " + k.as_of;
+        const pct = k.overall_enrollment_pct * 100;
+        const items = [
+          {
+            l: "Active / Enrolling Studies",
+            to: k.active_trials,
+            f: (v) => Math.round(v) + " / " + k.total_trials,
+          },
+          {
+            l: "Overall Enrollment",
+            to: pct,
+            f: (v) => Math.round(v) + "%",
+            bar: pct,
+          },
+          {
+            l: "Open Data Queries",
+            to: k.open_data_queries,
+            f: (v) => Math.round(v),
+          },
+          {
+            l: "AE / SAE Reports",
+            to: k.ae_count,
+            f: (v) => Math.round(v) + " / " + k.sae_count,
+            bad: k.sae_count > 0,
+          },
+        ];
+        document.getElementById("kpiRow").innerHTML = items
+          .map(
+            (i) =>
+              `<div class="kpi ${i.bad ? "bad" : ""}"><div class="num">0</div><div class="label">${i.l}</div>${i.bar != null ? `<div class="bar"><i style="width:${i.bar}%"></i></div>` : ""}</div>`,
+          )
+          .join("");
+        document
+          .querySelectorAll("#kpiRow .num")
+          .forEach((el, n) => countUp(el, items[n].to, items[n].f));
+      }
 
-// ---------- Renderers ----------
-function renderKPIs(kpis){
-  document.getElementById("asOf").textContent = "As of " + kpis.as_of;
-  document.getElementById("kpiRow").innerHTML = [
-    {label:"Active / Enrolling Studies", num: kpis.active_trials + " / " + kpis.total_trials},
-    {label:"Overall Enrollment", num: Math.round(kpis.overall_enrollment_pct*100) + "%"},
-    {label:"Open Data Queries", num: kpis.open_data_queries},
-    {label:"AE / SAE Reports", num: kpis.ae_count + " / " + kpis.sae_count},
-  ].map(i => `<div class="kpi"><div class="num">${i.num}</div><div class="label">${i.label}</div></div>`).join("");
-}
+      function renderAlerts(a) {
+        ALERTS = a || ALERTS;
+        const crit = ALERTS.filter((x) => x.severity === "critical").length;
+        setBadge("overview", crit);
+        const chip = (k, t) =>
+          `<button class="chip ${ALERT_F === k ? "on" : ""}" onclick="setAlertF('${k}')">${t}</button>`;
+        const list = ALERTS.filter(
+          (x) => ALERT_F === "all" || x.severity === ALERT_F,
+        );
+        document.getElementById("alertList").innerHTML =
+          `<div class="chips">${chip("all", "All " + ALERTS.length)}${chip("critical", "Critical " + crit)}${chip("warning", "Warning " + (ALERTS.length - crit))}</div>` +
+          (list.length
+            ? list
+                .map(
+                  (x) =>
+                    `<div class="alert ${x.severity}"><span class="tag">${x.type}</span><div><div class="detail">${x.detail}</div><span class="trial">${x.trial_id}</span></div></div>`,
+                )
+                .join("")
+            : '<div class="empty">No alerts in this category.</div>');
+      }
 
-function renderAlerts(alerts){
-  const el = document.getElementById("alertList");
-  if(!alerts.length){ el.innerHTML = '<div class="empty">No open alerts.</div>'; return; }
-  el.innerHTML = alerts.map(a => `
-    <div class="alert ${a.severity}">
-      <span class="tag">${a.type}</span>
-      <div><div class="detail">${a.detail}</div><span class="trial">${a.trial_id}</span></div>
-    </div>`).join("");
-}
-
-function renderTrials(trials){
-  document.getElementById("trialTable").innerHTML = trials.map(t => `
+      function renderTrials(trials) {
+        document.getElementById("trialTable").innerHTML = trials
+          .map(
+            (t) => `
     <tr>
       <td><strong>${t.id}</strong><br><span style="color:var(--ink-soft)">${t.title}</span></td>
       <td>${t.phase}</td>
       <td><span class="pill ${pillClass(t.status)}">${t.status}</span></td>
-      <td>${t.current_enrollment}/${t.target_enrollment}</td>
+      <td style="min-width:130px"><div class="bar"><i style="width:${Math.round((t.current_enrollment / t.target_enrollment) * 100)}%"></i></div><small style="color:var(--ink-soft)">${t.current_enrollment}/${t.target_enrollment} · ${Math.round((t.current_enrollment / t.target_enrollment) * 100)}%</small></td>
       <td>${t.ctri_number}<br><span style="color:var(--ink-soft)">upd. ${t.ctri_last_updated}</span></td>
       <td><span class="pill ${pillClass(t.ethics_status)}">${t.ethics_status}</span></td>
-    </tr>`).join("");
-  document.getElementById("trialSelect").innerHTML = trials.map(t => `<option value="${t.id}">${t.id} — ${t.title}</option>`).join("");
-}
+    </tr>`,
+          )
+          .join("");
+        document.getElementById("trialSelect").innerHTML = trials
+          .map((t) => `<option value="${t.id}">${t.id} — ${t.title}</option>`)
+          .join("");
+      }
 
-function renderSignals(signals){
-  const el = document.getElementById("signalList");
-  if(!signals.length){ el.innerHTML = '<div class="empty">No pharmacovigilance signals detected in current data.</div>'; return; }
-  el.innerHTML = signals.map(s => `
+      function renderSignals(signals) {
+        setBadge("pv", signals.length);
+        const el = document.getElementById("signalList");
+        if (!signals.length) {
+          el.innerHTML =
+            '<div class="empty">No pharmacovigilance signals detected in current data.</div>';
+          return;
+        }
+        el.innerHTML = signals
+          .map(
+            (s) => `
     <div class="signal-card">
-      <h4>${s.symptom} — ${s.trial_id} (${s.report_count} reports, ${s.distinct_sites} site${s.distinct_sites>1?'s':''}, ${s.span_days} day span)</h4>
+      <h4>${s.symptom} — ${s.trial_id} (${s.report_count} reports, ${s.distinct_sites} site${s.distinct_sites > 1 ? "s" : ""}, ${s.span_days} day span)</h4>
       <div class="route">Routed to: ${s.route_to} · anomaly score ${s.anomaly_score}</div>
-      <ul>${s.reasons.map(r => `<li>${r}</li>`).join("")}</ul>
-    </div>`).join("");
-}
+      <ul>${s.reasons.map((r) => `<li>${r}</li>`).join("")}</ul>
+      <button class="btn-secondary" style="margin-top:10px" onclick="toast('Escalation sent to DSMB (demo action)')">Escalate to DSMB</button>
+    </div>`,
+          )
+          .join("");
+      }
 
-function renderAudit(log){
-  const el = document.getElementById("auditLog");
-  if(!log.length){ el.innerHTML = '<div class="empty">No audit entries yet.</div>'; return; }
-  el.innerHTML = log.slice().reverse().map(a => `<div><strong>${a.timestamp}</strong> — ${a.action} by ${a.actor}: ${a.detail}</div>`).join("");
-}
+      function renderAudit(log) {
+        AUDIT = log || AUDIT;
+        const q = document.getElementById("auditQ").value.toLowerCase();
+        const rows = AUDIT.slice()
+          .reverse()
+          .filter((a) => !q || JSON.stringify(a).toLowerCase().includes(q));
+        document.getElementById("auditLog").innerHTML = rows.length
+          ? rows
+              .map(
+                (a) =>
+                  `<div class="ar"><span class="ai">${AICON[a.action] || "📝"}</span><span class="at"><strong>${a.action}</strong> · ${a.actor}<span class="ago" title="${a.timestamp}">${ago(a.timestamp)}</span><br>${a.detail}</span></div>`,
+              )
+              .join("")
+          : '<div class="empty">No matching audit entries.</div>';
+      }
 
-function renderSubjects(subjects){
-  const canEdit = WRITE_ROLES.consent.includes(ROLE_KEY);
-  document.getElementById("subjectsTable").innerHTML = subjects.map(s => `
+      function renderSubjects(subjects) {
+        const canEdit = WRITE_ROLES.consent.includes(ROLE_KEY);
+        document.getElementById("subjectsTable").innerHTML = subjects
+          .map(
+            (s) => `
     <tr>
       <td><strong>${s.subject_id}</strong><br><span style="color:var(--ink-soft)">${s.name}</span></td>
       <td>${s.age} / ${s.sex}</td>
@@ -517,130 +1765,515 @@ function renderSubjects(subjects){
       <td>${s.site}</td>
       <td>${s.abha_id}</td>
       <td><span class="pill ${pillClass(s.consent_status)}">${s.consent_status}</span></td>
-      <td>${canEdit ? `
+      <td>${
+        canEdit
+          ? `
         <div class="consent-action">
           <select data-subject="${s.subject_id}" data-trial="${s.trial_id}" class="consentSelect">
-            <option ${s.consent_status==='Pending'?'selected':''}>Pending</option>
-            <option ${s.consent_status==='Consented'?'selected':''}>Consented</option>
-            <option ${s.consent_status==='Withdrawn'?'selected':''}>Withdrawn</option>
+            <option ${s.consent_status === "Pending" ? "selected" : ""}>Pending</option>
+            <option ${s.consent_status === "Consented" ? "selected" : ""}>Consented</option>
+            <option ${s.consent_status === "Withdrawn" ? "selected" : ""}>Withdrawn</option>
           </select>
           <button class="consentSaveBtn" data-subject="${s.subject_id}" data-trial="${s.trial_id}">Save</button>
-        </div>` : ""}
+        </div>`
+          : ""
+      }
       </td>
-    </tr>`).join("");
+    </tr>`,
+          )
+          .join("");
 
-  document.querySelectorAll(".consentSaveBtn").forEach(btn => {
-    btn.addEventListener("click", async () => {
-      const subjectId = btn.dataset.subject, trialId = btn.dataset.trial;
-      const select = document.querySelector(`.consentSelect[data-subject="${subjectId}"]`);
-      try{
-        await apiJSON("/consent", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({trial_id: trialId, subject_id: subjectId, status: select.value})});
-        loadSubjects(); loadAudit();
-      }catch(e){ alert("Could not update consent: " + e.message); }
-    });
-  });
-}
+        document.querySelectorAll(".consentSaveBtn").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const subjectId = btn.dataset.subject,
+              trialId = btn.dataset.trial;
+            const select = document.querySelector(
+              `.consentSelect[data-subject="${subjectId}"]`,
+            );
+            try {
+              await apiJSON("/consent", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  trial_id: trialId,
+                  subject_id: subjectId,
+                  status: select.value,
+                }),
+              });
+              loadSubjects();
+              loadAudit();
+            } catch (e) {
+              alert("Could not update consent: " + e.message);
+            }
+          });
+        });
+      }
 
-function renderEsign(data){
-  document.getElementById("esignTable").innerHTML = data.signatures.slice().reverse().map(s => `
-    <tr><td>${s.timestamp}</td><td>${s.actor} (${s.role})</td><td>${s.meaning}</td><td>${s.record_type}: ${s.record_id}</td><td style="font-family:monospace; font-size:11px;">${s.hash}</td></tr>`).join("") || '<tr><td colspan="5" class="empty">No signatures yet.</td></tr>';
-  const badge = document.getElementById("chainBadge");
-  badge.textContent = data.chain_valid ? "Chain valid" : "Chain broken";
-  badge.className = "chain-badge " + (data.chain_valid ? "valid" : "invalid");
-}
+      function renderEsign(data) {
+        document.getElementById("esignTable").innerHTML =
+          data.signatures
+            .slice()
+            .reverse()
+            .map(
+              (s) => `
+    <tr><td>${s.timestamp}</td><td>${s.actor} (${s.role})</td><td>${s.meaning}</td><td>${s.record_type}: ${s.record_id}</td><td style="font-family:monospace; font-size:11px;">${s.hash}</td></tr>`,
+            )
+            .join("") ||
+          '<tr><td colspan="5" class="empty">No signatures yet.</td></tr>';
+        const badge = document.getElementById("chainBadge");
+        badge.textContent = data.chain_valid ? "Chain valid" : "Chain broken";
+        badge.className =
+          "chain-badge " + (data.chain_valid ? "valid" : "invalid");
+      }
 
-function renderIntegrations(status){
-  const labels = {edc:"Electronic Data Capture", abdm:"ABDM / ABHA Linkage", fhir:"HL7 FHIR R4"};
-  document.getElementById("integrationRow").innerHTML = Object.entries(status).map(([key, s]) => `
+      function renderIntegrations(status) {
+        const labels = {
+          edc: "Electronic Data Capture",
+          abdm: "ABDM / ABHA Linkage",
+          fhir: "HL7 FHIR R4",
+        };
+        document.getElementById("integrationRow").innerHTML = Object.entries(
+          status,
+        )
+          .map(
+            ([key, s]) => `
     <div class="integration-card">
       <h4><span class="dot"></span>${labels[key]}</h4>
       <p>${s.system}</p>
       <p><strong>Last sync:</strong> ${s.last_sync || "never"}</p>
-    </div>`).join("");
-}
+    </div>`,
+          )
+          .join("");
+      }
 
-function renderCompliance(posture){
-  const sections = [
-    {title:"Hosting", data: posture.hosting},
-    {title:"Encryption", data: posture.encryption},
-    {title:"DPDP Act 2023", data: posture.dpdp_2023},
-  ];
-  document.getElementById("complianceGrid").innerHTML = sections.map(sec => `
+      function renderCompliance(posture) {
+        const sections = [
+          { title: "Hosting", data: posture.hosting },
+          { title: "Encryption", data: posture.encryption },
+          { title: "DPDP Act 2023", data: posture.dpdp_2023 },
+        ];
+        document.getElementById("complianceGrid").innerHTML = sections
+          .map(
+            (sec) => `
     <div class="compliance-card">
       <h4>${sec.title}</h4>
-      ${Object.entries(sec.data).map(([k,v]) => `<p><span class="k">${k.replace(/_/g," ")}:</span> ${v}</p>`).join("")}
-    </div>`).join("");
-}
+      ${Object.entries(sec.data)
+        .map(
+          ([k, v]) =>
+            `<p><span class="k">${k.replace(/_/g, " ")}:</span> ${v}</p>`,
+        )
+        .join("")}
+    </div>`,
+          )
+          .join("");
+      }
 
-// ---------- Loaders ----------
-async function loadSubjects(){ try{ renderSubjects(await apiJSON("/subjects")); }catch(e){} }
-async function loadAudit(){ try{ renderAudit(await apiJSON("/audit-log")); }catch(e){} }
+      // ---------- Loaders ----------
+      async function loadSubjects() {
+        try {
+          renderSubjects(await apiJSON("/subjects"));
+        } catch (e) {}
+      }
+      async function loadAudit() {
+        try {
+          renderAudit(await apiJSON("/audit-log"));
+        } catch (e) {}
+      }
 
-async function loadAll(){
-  try{
-    const [kpis, trials, signals, audit, subjects, esign, integ, posture] = await Promise.all([
-      apiJSON("/kpis"), apiJSON("/trials"), apiJSON("/pharmacovigilance/signals"),
-      apiJSON("/audit-log"), apiJSON("/subjects"), apiJSON("/esign"),
-      apiJSON("/integrations/status"), apiJSON("/compliance/posture"),
-    ]);
-    renderKPIs(kpis); renderAlerts(kpis.alerts); renderTrials(trials);
-    renderSignals(signals); renderAudit(audit); renderSubjects(subjects);
-    renderEsign(esign); renderIntegrations(integ); renderCompliance(posture);
-  }catch(e){
-    document.getElementById("alertList").innerHTML = '<div class="empty">Could not reach the backend at ' + API + '. Run <code>python app.py</code> in /backend, then reload.</div>';
-  }
-}
+      async function loadAll() {
+        try {
+          const [
+            kpis,
+            trials,
+            signals,
+            audit,
+            subjects,
+            esign,
+            integ,
+            posture,
+            aes,
+          ] = await Promise.all([
+            apiJSON("/kpis"),
+            apiJSON("/trials"),
+            apiJSON("/pharmacovigilance/signals"),
+            apiJSON("/audit-log"),
+            apiJSON("/subjects"),
+            apiJSON("/esign"),
+            apiJSON("/integrations/status"),
+            apiJSON("/compliance/posture"),
+            apiJSON("/ae-reports"),
+          ]);
+          renderKPIs(kpis);
+          renderAlerts(kpis.alerts);
+          renderTrials(trials);
+          TRIALS = trials;
+          fillSites();
+          renderHeatmap(trials, kpis.as_of);
+          renderSignals(signals);
+          renderAudit(audit);
+          renderSubjects(subjects);
+          renderEsign(esign);
+          renderIntegrations(integ);
+          renderCompliance(posture);
+          renderPV(aes);
+        } catch (e) {
+          document.getElementById("alertList").innerHTML =
+            '<div class="empty">Could not reach the backend at ' +
+            API +
+            ". Run <code>python app.py</code> in /backend, then reload.</div>";
+        }
+      }
 
-// ---------- Forms ----------
-document.getElementById("aeForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const body = Object.fromEntries(new FormData(e.target).entries());
-  body.serious = body.serious === "true";
-  const msg = document.getElementById("formMsg");
-  try{
-    await apiJSON("/ae-reports", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
-    msg.style.color = "var(--green)"; msg.textContent = "Logged. Signal detector and audit trail updated.";
-    e.target.reset(); loadAll();
-  }catch(err){ msg.style.color = "var(--red)"; msg.textContent = err.message; }
-});
+      // ---------- Forms ----------
+      document
+        .getElementById("aeForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const body = Object.fromEntries(new FormData(e.target).entries());
+          body.serious = body.serious === "true";
+          const msg = document.getElementById("formMsg");
+          try {
+            await apiJSON("/ae-reports", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            });
+            msg.style.color = "var(--green)";
+            msg.textContent =
+              "Logged. Signal detector and audit trail updated.";
+            e.target.reset();
+            scanSignals();
+            fillSites();
+            document
+              .querySelector("#aeForm [name=serious]")
+              .dispatchEvent(new Event("change"));
+            loadAll();
+          } catch (err) {
+            msg.style.color = "var(--red)";
+            msg.textContent = err.message;
+          }
+        });
 
-document.getElementById("esignForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const body = Object.fromEntries(new FormData(e.target).entries());
-  const msg = document.getElementById("esignMsg");
-  try{
-    await apiJSON("/esign", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
-    msg.style.color = "var(--green)"; msg.textContent = "Signed and added to ledger.";
-    e.target.reset();
-    renderEsign(await apiJSON("/esign")); loadAudit();
-  }catch(err){ msg.style.color = "var(--red)"; msg.textContent = err.message; }
-});
+      document
+        .getElementById("esignForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const body = Object.fromEntries(new FormData(e.target).entries());
+          const msg = document.getElementById("esignMsg");
+          try {
+            await apiJSON("/esign", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            });
+            msg.style.color = "var(--green)";
+            msg.textContent = "Signed and added to ledger.";
+            e.target.reset();
+            renderEsign(await apiJSON("/esign"));
+            loadAudit();
+          } catch (err) {
+            msg.style.color = "var(--red)";
+            msg.textContent = err.message;
+          }
+        });
 
-document.getElementById("edcSyncBtn").addEventListener("click", async () => {
-  const msg = document.getElementById("edcMsg");
-  try{
-    await apiJSON("/integrations/edc-sync", {method:"POST"});
-    msg.style.color = "var(--green)"; msg.textContent = "Simulated EDC sync complete — new AE record pulled in.";
-    loadAll();
-  }catch(err){ msg.style.color = "var(--red)"; msg.textContent = err.message; }
-});
+      document
+        .getElementById("edcSyncBtn")
+        .addEventListener("click", async () => {
+          const msg = document.getElementById("edcMsg");
+          try {
+            await apiJSON("/integrations/edc-sync", { method: "POST" });
+            msg.style.color = "var(--green)";
+            msg.textContent =
+              "Simulated EDC sync complete — new AE record pulled in.";
+            loadAll();
+          } catch (err) {
+            msg.style.color = "var(--red)";
+            msg.textContent = err.message;
+          }
+        });
 
-document.querySelectorAll(".export-btn").forEach(btn => {
-  btn.addEventListener("click", async () => {
-    const path = "/cdisc/" + btn.dataset.export + (btn.dataset.export === "define-xml" ? "" : "?format=csv");
-    try{
-      const res = await api(path);
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url; a.download = btn.dataset.name; document.body.appendChild(a); a.click();
-      document.body.removeChild(a); URL.revokeObjectURL(url);
-    }catch(err){ alert("Export failed: " + err.message); }
-  });
-});
+      document.querySelectorAll(".export-btn").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const path =
+            "/cdisc/" +
+            btn.dataset.export +
+            (btn.dataset.export === "define-xml" ? "" : "?format=csv");
+          try {
+            const res = await api(path);
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = btn.dataset.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          } catch (err) {
+            alert("Export failed: " + err.message);
+          }
+        });
+      });
 
-// ---------- Boot ----------
-if(TOKEN){ showApp(); } else { document.getElementById("loginScreen").style.display = "flex"; }
-</script>
-</body>
+      // ---------- Anamaya-style upgrades ----------
+      const BRAND = "Anvesha";
+      const ROLES = [
+        ["investigator", "🩺", "Investigator", "Dr. R. Sharma"],
+        ["coordinator", "📋", "Study Coordinator", "S. Verma"],
+        ["ethics", "⚖️", "Ethics Committee", "IEC oversight"],
+        ["pv", "🛡️", "Pharmacovigilance", "NPvCC safety cell"],
+        ["leadership", "🏛️", "Leadership", "Portfolio view"],
+        ["regulator", "🔍", "Regulator", "Read-only"],
+      ];
+      const MEDDRA = {
+        Nausea: "10028813",
+        Headache: "10019211",
+        Dizziness: "10013573",
+        Vomiting: "10047700",
+        Diarrhoea: "10012735",
+        Rash: "10037844",
+        Pruritus: "10037087",
+        Fatigue: "10016256",
+        Insomnia: "10022437",
+        "Abdominal pain": "10000081",
+      };
+      const AICON = {
+        LOGIN: "🔑",
+        LOGOUT: "🚪",
+        AE_REPORT_CREATED: "🩺",
+        ESIGNATURE_CAPTURED: "✍️",
+        EDC_SYNC: "🔄",
+        CONSENT_UPDATED: "📄",
+      };
+      let TRIALS = [],
+        ALERTS = [],
+        ALERT_F = "all",
+        AUDIT = [],
+        saeT;
+
+      document.title = BRAND + " — Clinical Trial Intelligence";
+      document.querySelectorAll(".bn").forEach((e) => (e.textContent = BRAND));
+      document.getElementById("roleGrid").innerHTML = ROLES.map(
+        (r) =>
+          `<button type="button" class="role-card" data-u="${r[0]}"><span class="ic">${r[1]}</span><span><b>${r[2]}</b><small>${r[3]}</small></span></button>`,
+      ).join("");
+      document.querySelectorAll(".role-card").forEach((b) =>
+        b.addEventListener("click", () => {
+          document.getElementById("loginUsername").value = b.dataset.u;
+          document.getElementById("loginForm").requestSubmit();
+        }),
+      );
+
+      function toast(m) {
+        const t = document.createElement("div");
+        t.className = "toast";
+        t.textContent = m;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 2600);
+      }
+      function countUp(el, to, fmt) {
+        const t0 = performance.now();
+        (function f(t) {
+          const p = Math.min((t - t0) / 900, 1);
+          el.textContent = fmt(to * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(f);
+        })(t0);
+      }
+      function setBadge(sec, n) {
+        const b = document.querySelector(`.nav-btn[data-section=${sec}]`);
+        let e = b.querySelector(".badge");
+        if (!e) {
+          e = document.createElement("span");
+          e.className = "badge";
+          b.appendChild(e);
+        }
+        e.textContent = n;
+        e.style.display = n ? "inline-block" : "none";
+      }
+      function setAlertF(k) {
+        ALERT_F = k;
+        renderAlerts();
+      }
+      function ago(ts) {
+        const s = (Date.now() - new Date(ts)) / 1e3;
+        return s < 60
+          ? "just now"
+          : s < 3600
+            ? Math.floor(s / 60) + " min ago"
+            : s < 86400
+              ? Math.floor(s / 3600) + " h ago"
+              : Math.floor(s / 86400) + " d ago";
+      }
+      document
+        .getElementById("auditQ")
+        .addEventListener("input", () => renderAudit());
+
+      function renderHeatmap(trials, asOf) {
+        const now = new Date(asOf),
+          dd = (s) => Math.round((now - new Date(s)) / 864e5);
+        const head = [
+          "Enrollment",
+          "Ethics",
+          "CTRI",
+          "Monitoring",
+          "Deviations",
+          "Queries",
+        ];
+        const rows = trials
+          .map((t) => {
+            const p = t.current_enrollment / t.target_enrollment,
+              ctri = dd(t.ctri_last_updated),
+              mv = t.next_monitoring_visit ? dd(t.next_monitoring_visit) : -99;
+            const sv = [
+              t.status === "Active" && p < 0.7 ? 1 : 0,
+              t.ethics_status === "Renewal Due" ? 2 : 0,
+              ctri > 180 ? 2 : ctri > 150 ? 1 : 0,
+              mv > 0 ? 2 : mv >= -7 ? 1 : 0,
+              t.protocol_deviations >= 5
+                ? 2
+                : t.protocol_deviations >= 3
+                  ? 1
+                  : 0,
+              t.data_query_open >= 10 ? 2 : t.data_query_open >= 5 ? 1 : 0,
+            ];
+            const vals = [
+              Math.round(p * 100) + "%",
+              t.ethics_status === "Renewal Due" ? "Renew" : "OK",
+              ctri + "d",
+              t.next_monitoring_visit
+                ? mv > 0
+                  ? mv + "d late"
+                  : "in " + -mv + "d"
+                : "—",
+              t.protocol_deviations,
+              t.data_query_open,
+            ];
+            const score = Math.max(0, 100 - sv.reduce((a, b) => a + b * 8, 0)),
+              c =
+                score >= 80
+                  ? "var(--green-light)"
+                  : score >= 60
+                    ? "var(--saffron)"
+                    : "var(--red)";
+            return `<tr><td><b>${t.id}</b></td>${sv.map((v, i) => `<td><span class="hm h${v}">${vals[i]}</span></td>`).join("")}<td><div class="ring" style="--p:${score};--c:${c}"><span>${score}</span></div></td></tr>`;
+          })
+          .join("");
+        document.getElementById("heatmap").innerHTML =
+          `<table><thead><tr><th>Trial</th>${head.map((h) => `<th>${h}</th>`).join("")}<th>Health</th></tr></thead><tbody>${rows}</tbody></table>`;
+      }
+
+      function renderPV(rs) {
+        const cnt = (f) =>
+          rs.reduce((m, r) => {
+            const k = f(r);
+            m[k] = (m[k] || 0) + 1;
+            return m;
+          }, {});
+        const sv = cnt((r) => r.severity),
+          cols = { Mild: "#2E9D5D", Moderate: "#DB8A2C", Severe: "#AE3B2C" },
+          tot = rs.length || 1;
+        let acc = 0;
+        const grad = Object.keys(cols)
+          .map((k) => {
+            const a = (acc / tot) * 100;
+            acc += sv[k] || 0;
+            return `${cols[k]} ${a}% ${(acc / tot) * 100}%`;
+          })
+          .join(",");
+        const bars = (m) => {
+          const mx = Math.max(1, ...Object.values(m));
+          return Object.entries(m)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(
+              ([k, v]) =>
+                `<div class="hb"><span>${k}</span><div class="bar"><i style="width:${(v / mx) * 100}%"></i></div><b>${v}</b></div>`,
+            )
+            .join("");
+        };
+        document.getElementById("pvCharts").innerHTML =
+          `<div class="chart-card"><h4>Severity mix</h4><div class="donut" style="background:conic-gradient(${grad || "#E5ECE7 0 100%"})"><span>${rs.length}<small>AEs</small></span></div><div class="legend">${Object.keys(
+            cols,
+          )
+            .map(
+              (k) =>
+                `<span><i style="background:${cols[k]}"></i>${k} ${sv[k] || 0}</span>`,
+            )
+            .join("")}</div></div>` +
+          `<div class="chart-card"><h4>Top symptoms</h4>${bars(cnt((r) => r.symptom))}</div>` +
+          `<div class="chart-card"><h4>AEs by trial</h4>${bars(cnt((r) => r.trial_id))}</div>`;
+      }
+
+      function fillSites() {
+        const t = TRIALS.find(
+          (x) => x.id === document.getElementById("trialSelect").value,
+        );
+        document.getElementById("siteSelect").innerHTML = (t ? t.sites : [])
+          .map((s) => `<option>${s}</option>`)
+          .join("");
+      }
+      document
+        .getElementById("trialSelect")
+        .addEventListener("change", fillSites);
+      document.getElementById("symList").innerHTML = Object.keys(MEDDRA)
+        .map((k) => `<option value="${k}">`)
+        .join("");
+      document.getElementById("symInput").addEventListener("input", (e) => {
+        const c = MEDDRA[e.target.value];
+        if (c) document.getElementById("meddraInput").value = c;
+      });
+
+      function scanSignals() {
+        const el = document.getElementById("signalList");
+        el.classList.add("scanning");
+        toast("Re-running Isolation Forest on the new report…");
+        setTimeout(() => el.classList.remove("scanning"), 1500);
+      }
+      const saeSel = document.querySelector("#aeForm [name=serious]");
+      saeSel.addEventListener("change", () => {
+        clearInterval(saeT);
+        const on = saeSel.value === "true",
+          b = document.getElementById("saeBanner");
+        b.style.display = on ? "block" : "none";
+        document.getElementById("aeForm").classList.toggle("sae", on);
+        if (on) {
+          const end = Date.now() + 864e5;
+          const tick = () => {
+            const s = Math.max(0, Math.floor((end - Date.now()) / 1e3));
+            b.textContent =
+              "⚠ Serious AE — expedited report due within 24 h · " +
+              [s / 3600, (s % 3600) / 60, s % 60]
+                .map((x) => String(Math.floor(x)).padStart(2, "0"))
+                .join(":") +
+              " remaining";
+          };
+          tick();
+          saeT = setInterval(tick, 1000);
+        }
+      });
+
+      // ---------- Splash ----------
+      (function () {
+        const sp = document.getElementById("splash");
+        if (TOKEN) {
+          sp.remove();
+          return;
+        }
+        const done = () => {
+          sp.classList.add("out");
+          setTimeout(() => sp.remove(), 700);
+        };
+        sp.addEventListener("click", done);
+        setTimeout(done, 5000);
+      })();
+
+      // ---------- Boot ----------
+      if (TOKEN) {
+        showApp();
+      } else {
+        document.getElementById("loginScreen").style.display = "flex";
+      }
+    </script>
+  </body>
 </html>
