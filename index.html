@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIIA CTMS — Clinical Trial Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1B7A46;
+    --green-light:#2E9D5D;
+    --blue:#123F7B;
+    --blue-light:#1D5BA0;
+    --saffron:#DB8A2C;
+    --saffron-dim:#FBEAD2;
+    --bg:#F3F7F4;
+    --panel:#FFFFFF;
+    --ink:#132420;
+    --ink-soft:#52655D;
+    --border:#DCE6DF;
+    --red:#AE3B2C;
+    --red-dim:#F7E3DE;
+    --gradient:linear-gradient(115deg, var(--green) 0%, var(--green-light) 30%, var(--blue-light) 68%, var(--blue) 100%);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif; font-size:14px; line-height:1.5;
+  }
+  h1,h2,h3,h4{font-family:'Lora',Georgia,serif; margin:0; font-weight:600;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  /* ---------- Login screen ---------- */
+  #loginScreen{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:var(--gradient); padding:24px;
+  }
+  .login-card{
+    background:var(--panel); border-radius:12px; padding:36px 34px; width:100%; max-width:380px;
+    box-shadow:0 18px 50px rgba(10,30,20,.25);
+  }
+  .login-card .tag{font-size:11px; letter-spacing:.02em; color:var(--green); font-weight:600; margin-bottom:6px;}
+  .login-card h1{font-size:21px; color:var(--ink); margin-bottom:4px;}
+  .login-card p.sub{font-size:12.5px; color:var(--ink-soft); margin:0 0 22px 0;}
+  .login-card label{display:block; font-size:12px; color:var(--ink-soft); margin-bottom:5px; margin-top:14px;}
+  .login-card input, .login-card select{
+    width:100%; padding:9px 11px; border:1px solid var(--border); border-radius:6px; font-size:13.5px; font-family:inherit;
+  }
+  .login-card button{
+    width:100%; margin-top:20px; background:var(--green); color:#fff; border:none; padding:11px;
+    border-radius:7px; font-weight:600; font-size:14px; cursor:pointer;
+  }
+  .login-card button:hover{background:#155f38;}
+  .login-hint{margin-top:16px; font-size:11.5px; color:var(--ink-soft); background:#F1F5F2; border-radius:6px; padding:10px 12px;}
+  .login-error{color:var(--red); font-size:12.5px; margin-top:10px; min-height:16px;}
+
+  /* ---------- App shell ---------- */
+  .app{display:none; grid-template-columns:230px 1fr; min-height:100vh;}
+  .app.visible{display:grid;}
+  .sidebar{
+    background:var(--gradient); color:#fff; padding:26px 18px; display:flex; flex-direction:column; gap:22px;
+  }
+  .brand h1{font-size:18px; color:#fff;}
+  .brand span{font-size:11.5px; color:#DCEFE2; display:block; margin-top:2px;}
+  .user-chip{background:rgba(255,255,255,.14); border-radius:8px; padding:10px 12px; font-size:12.5px;}
+  .user-chip .name{font-weight:600; display:block;}
+  .user-chip .role{color:#DCEFE2; font-size:11px;}
+  .nav-list{display:flex; flex-direction:column; gap:3px;}
+  .nav-item{font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:#BFE0CC; margin:10px 0 2px 4px;}
+  .nav-btn{
+    text-align:left; background:transparent; border:none; color:#E7F3EA; padding:8px 10px;
+    border-radius:6px; cursor:pointer; font-size:13px;
+  }
+  .nav-btn:hover{background:rgba(255,255,255,.1);}
+  .nav-btn.active{background:#fff; color:var(--green); font-weight:600;}
+  .sidebar-foot{margin-top:auto; font-size:10.5px; color:#BFE0CC; line-height:1.5;}
+  .logout-btn{
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3); color:#fff;
+    padding:7px 10px; border-radius:6px; font-size:12px; cursor:pointer;
+  }
+  .logout-btn:hover{background:rgba(255,255,255,.22);}
+
+  main{padding:28px 34px; max-width:1220px;}
+  .topbar{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; flex-wrap:wrap; gap:8px;}
+  .topbar h2{font-size:22px;}
+  .topbar .meta{font-size:12px; color:var(--ink-soft);}
+  .role-note{font-size:12.5px; color:var(--ink-soft); background:#EAF2EC; border-radius:6px; padding:9px 12px; margin:10px 0 22px 0;}
+
+  .kpi-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px;}
+  .kpi{background:var(--panel); border:1px solid var(--border); border-radius:9px; padding:15px 16px; border-top:3px solid var(--green);}
+  .kpi .num{font-family:'Lora',serif; font-size:25px; font-weight:700; color:var(--blue);}
+  .kpi .label{font-size:11.5px; color:var(--ink-soft); margin-top:3px;}
+
+  section{margin-bottom:28px;}
+  section > h3{font-size:15px; margin-bottom:10px; padding-bottom:7px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;}
+  section > h3 .hint{font-size:11px; color:var(--ink-soft); font-family:'Inter'; font-weight:400;}
+
+  .alert-list{display:flex; flex-direction:column; gap:8px;}
+  .alert{
+    display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border-radius:7px;
+    border:1px solid var(--border); background:var(--panel);
+  }
+  .alert.critical{border-left:3px solid var(--red); background:var(--red-dim);}
+  .alert.warning{border-left:3px solid var(--saffron); background:var(--saffron-dim);}
+  .alert .tag{font-size:11px; font-weight:600; white-space:nowrap; padding:2px 8px; border-radius:10px; background:#fff;}
+  .alert.critical .tag{color:var(--red);}
+  .alert.warning .tag{color:var(--saffron);}
+  .alert .detail{font-size:13px; color:var(--ink);}
+  .alert .trial{font-size:11px; color:var(--ink-soft); display:block; margin-top:2px;}
+
+  table{width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--border); border-radius:9px; overflow:hidden;}
+  th,td{padding:10px 12px; text-align:left; font-size:12.5px; border-bottom:1px solid var(--border); vertical-align:top;}
+  th{background:#EEF3EF; font-weight:600; color:var(--ink-soft); font-size:11px;}
+  tr:last-child td{border-bottom:none;}
+  .pill{padding:2px 9px; border-radius:10px; font-size:11px; font-weight:600; white-space:nowrap;}
+  .pill.active{background:#DCF0E2; color:var(--green);}
+  .pill.enrolling{background:#DDE7F5; color:var(--blue);}
+  .pill.closing{background:#EDEAF5; color:#5B3E9E;}
+  .pill.approved{background:#DCF0E2; color:var(--green);}
+  .pill.renewal{background:var(--red-dim); color:var(--red);}
+  .pill.consented{background:#DCF0E2; color:var(--green);}
+  .pill.withdrawn{background:var(--red-dim); color:var(--red);}
+  .pill.pending{background:var(--saffron-dim); color:var(--saffron);}
+
+  .signal-card{
+    background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--red);
+    border-radius:8px; padding:14px 16px; margin-bottom:10px;
+  }
+  .signal-card h4{font-family:'Inter'; font-size:14px; margin:0 0 4px 0;}
+  .signal-card .route{font-size:11px; color:var(--red); font-weight:600; margin-bottom:6px;}
+  .signal-card ul{margin:6px 0 0 18px; padding:0; font-size:12.5px; color:var(--ink-soft);}
+  .empty{color:var(--ink-soft); font-size:13px; padding:14px; background:var(--panel); border:1px dashed var(--border); border-radius:8px;}
+
+  .form-grid{background:var(--panel); border:1px solid var(--border); border-radius:9px; padding:16px; display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
+  .form-grid label{font-size:12px; color:var(--ink-soft); display:flex; flex-direction:column; gap:4px;}
+  .form-grid input, .form-grid select{padding:7px 9px; border:1px solid var(--border); border-radius:5px; font-family:inherit; font-size:13px;}
+  .form-grid .full{grid-column:1/-1;}
+  .form-grid button{
+    background:var(--green); color:#fff; border:none; padding:9px 16px; border-radius:6px;
+    font-weight:600; cursor:pointer; font-size:13px; justify-self:start;
+  }
+  .form-grid button:hover{background:#155f38;}
+  .form-msg{font-size:12px; margin-top:4px;}
+
+  .audit{font-size:12px; color:var(--ink-soft); max-height:180px; overflow:auto; background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:10px 14px;}
+  .audit div{padding:4px 0; border-bottom:1px solid var(--border);}
+  .audit div:last-child{border-bottom:none;}
+
+  .note{font-size:12px; color:var(--ink-soft); background:#EAF2EC; border-radius:6px; padding:10px 12px; margin-bottom:16px;}
+
+  .integration-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:12px;}
+  .integration-card{background:var(--panel); border:1px solid var(--border); border-radius:9px; padding:14px;}
+  .integration-card .dot{display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--green); margin-right:6px;}
+  .integration-card h4{font-size:13px; margin-bottom:4px;}
+  .integration-card p{font-size:11.5px; color:var(--ink-soft); margin:4px 0 0 0;}
+  .btn-secondary{
+    background:var(--blue); color:#fff; border:none; padding:8px 14px; border-radius:6px;
+    font-size:12.5px; font-weight:600; cursor:pointer;
+  }
+  .btn-secondary:hover{background:#0d3260;}
+
+  .export-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .export-btn{
+    background:var(--panel); border:1px solid var(--border); border-radius:7px; padding:10px 14px;
+    font-size:12.5px; cursor:pointer; color:var(--ink); font-weight:600;
+  }
+  .export-btn:hover{border-color:var(--blue); color:var(--blue);}
+
+  .compliance-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .compliance-card{background:var(--panel); border:1px solid var(--border); border-radius:9px; padding:14px;}
+  .compliance-card h4{font-size:12.5px; color:var(--blue); margin-bottom:8px;}
+  .compliance-card p{font-size:11.5px; color:var(--ink-soft); margin:0 0 6px 0;}
+  .compliance-card .k{font-weight:600; color:var(--ink);}
+
+  .chain-badge{font-size:11px; font-weight:600; padding:3px 9px; border-radius:10px;}
+  .chain-badge.valid{background:#DCF0E2; color:var(--green);}
+  .chain-badge.invalid{background:var(--red-dim); color:var(--red);}
+
+  .consent-action{display:flex; gap:6px; align-items:center;}
+  .consent-action select{padding:4px 6px; font-size:11.5px; border:1px solid var(--border); border-radius:4px;}
+  .consent-action button{padding:4px 9px; font-size:11.5px; border:none; border-radius:4px; background:var(--blue); color:#fff; cursor:pointer;}
+
+  @media (max-width:900px){
+    .app{grid-template-columns:1fr;}
+    .sidebar{display:flex; flex-direction:row; align-items:center; overflow-x:auto;}
+    .kpi-row, .integration-row, .compliance-grid{grid-template-columns:1fr 1fr;}
+    .form-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="tag">Ministry of Ayush · AIIA</div>
+    <h1>AIIA CTMS</h1>
+    <p class="sub">Clinical Trial Portfolio &amp; Pharmacovigilance — sign in to continue</p>
+    <form id="loginForm">
+      <label>Role</label>
+      <select id="loginUsername">
+        <option value="investigator">Investigator — Dr. R. Sharma</option>
+        <option value="coordinator">Study Coordinator — S. Verma</option>
+        <option value="ethics">Ethics Committee</option>
+        <option value="pv">Pharmacovigilance (NPvCC)</option>
+        <option value="leadership">Institutional Leadership</option>
+        <option value="regulator">Regulator (read-only)</option>
+      </select>
+      <label>Password</label>
+      <input type="password" id="loginPassword" value="sih2026" required>
+      <button type="submit">Sign in</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+    <div class="login-hint">Demo credentials: any role above, password <strong>sih2026</strong>. A real deployment issues per-user institutional accounts.</div>
+  </div>
+</div>
+
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>AIIA CTMS</h1>
+      <span>Ministry of Ayush — Clinical Trial Portfolio</span>
+    </div>
+    <div class="user-chip">
+      <span class="name" id="chipName"></span>
+      <span class="role" id="chipRole"></span>
+    </div>
+    <div class="nav-list">
+      <div class="nav-item">Overview</div>
+      <button class="nav-btn active" data-section="overview">Portfolio &amp; Alerts</button>
+      <div class="nav-item">Safety</div>
+      <button class="nav-btn" data-section="pv">Pharmacovigilance</button>
+      <div class="nav-item">Compliance</div>
+      <button class="nav-btn" data-section="consent">Subjects &amp; Consent</button>
+      <button class="nav-btn" data-section="esign">E-Signatures</button>
+      <button class="nav-btn" data-section="export">CDISC Export</button>
+      <button class="nav-btn" data-section="integrations">Integrations</button>
+      <button class="nav-btn" data-section="security">Security Posture</button>
+      <button class="nav-btn" data-section="audit">Audit Trail</button>
+    </div>
+    <div class="sidebar-foot">
+      SIH Problem Statement 46 — prototype.<br>Synthetic data only, not real patient records.
+      <div style="margin-top:10px;"><button class="logout-btn" id="logoutBtn">Log out</button></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <h2 id="roleTitle">Dashboard</h2>
+      <span class="meta" id="asOf"></span>
+    </div>
+    <div class="role-note" id="roleNote"></div>
+
+    <div id="section-overview">
+      <div class="kpi-row" id="kpiRow"></div>
+      <section>
+        <h3>Alerts</h3>
+        <div class="alert-list" id="alertList"></div>
+      </section>
+      <section>
+        <h3>Trial Portfolio</h3>
+        <table>
+          <thead><tr><th>Study</th><th>Phase</th><th>Status</th><th>Enrollment</th><th>CTRI</th><th>Ethics</th></tr></thead>
+          <tbody id="trialTable"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <div id="section-pv" style="display:none;">
+      <section>
+        <h3>Pharmacovigilance Signals <span class="hint">Isolation Forest anomaly model</span></h3>
+        <div id="signalList"></div>
+      </section>
+      <section id="aeFormSection">
+        <h3>Log an Adverse Event</h3>
+        <form class="form-grid" id="aeForm">
+          <label>Trial<select name="trial_id" id="trialSelect"></select></label>
+          <label>Site<input name="site" placeholder="e.g. AIIA Delhi" required></label>
+          <label>Symptom<input name="symptom" placeholder="e.g. Nausea" required></label>
+          <label>Severity
+            <select name="severity"><option>Mild</option><option>Moderate</option><option>Severe</option></select>
+          </label>
+          <label>Serious Adverse Event?
+            <select name="serious"><option value="false">No</option><option value="true">Yes</option></select>
+          </label>
+          <label>MedDRA code (optional)<input name="meddra_code" placeholder="e.g. 10028813"></label>
+          <div class="full">
+            <button type="submit">Log AE report</button>
+            <div class="form-msg" id="formMsg"></div>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div id="section-consent" style="display:none;">
+      <section>
+        <h3>Subjects &amp; DPDP Consent <span class="hint">Identity masked unless role has clinical need</span></h3>
+        <table>
+          <thead><tr><th>Subject</th><th>Age/Sex</th><th>Arm</th><th>Site</th><th>ABHA ID</th><th>Consent</th><th></th></tr></thead>
+          <tbody id="subjectsTable"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <div id="section-esign" style="display:none;">
+      <section id="esignFormSection">
+        <h3>Capture Electronic Signature <span class="hint">Hash-chained, tamper-evident ledger</span></h3>
+        <form class="form-grid" id="esignForm">
+          <label>Meaning of signature<input name="meaning" placeholder="e.g. Confirmed monitoring visit completed" required></label>
+          <label>Record type
+            <select name="record_type"><option value="trial">Trial</option><option value="monitoring_visit">Monitoring Visit</option><option value="ethics_approval">Ethics Approval</option><option value="consent">Consent</option></select>
+          </label>
+          <label>Record ID<input name="record_id" placeholder="e.g. AIIA-CT-001" required></label>
+          <div class="full">
+            <button type="submit">Sign</button>
+            <div class="form-msg" id="esignMsg"></div>
+          </div>
+        </form>
+      </section>
+      <section>
+        <h3>Signature Ledger <span class="chain-badge" id="chainBadge"></span></h3>
+        <table>
+          <thead><tr><th>Timestamp</th><th>Actor</th><th>Meaning</th><th>Record</th><th>Hash</th></tr></thead>
+          <tbody id="esignTable"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <div id="section-export" style="display:none;">
+      <section>
+        <h3>CDISC-Aligned Export <span class="hint">SDTM / ADaM / Define-XML</span></h3>
+        <div class="export-row">
+          <button class="export-btn" data-export="sdtm/dm" data-name="DM.csv">Download SDTM DM (demographics)</button>
+          <button class="export-btn" data-export="sdtm/ae" data-name="AE.csv">Download SDTM AE (adverse events)</button>
+          <button class="export-btn" data-export="adam/adae" data-name="ADAE.csv">Download ADaM ADAE (analysis)</button>
+          <button class="export-btn" data-export="define-xml" data-name="define.xml">Download Define-XML</button>
+        </div>
+        <div class="note" style="margin-top:14px;">These are correctly-shaped SDTM/ADaM domains and an illustrative Define-XML — a demonstration that the data model is CDISC-aware, not a Pinnacle 21-validated submission package.</div>
+      </section>
+    </div>
+
+    <div id="section-integrations" style="display:none;">
+      <section>
+        <h3>External Integrations <span class="hint">Simulated — architecture is real, credentials are not</span></h3>
+        <div class="integration-row" id="integrationRow"></div>
+        <button class="btn-secondary" id="edcSyncBtn">Sync from EDC (simulate)</button>
+        <div class="form-msg" id="edcMsg"></div>
+      </section>
+    </div>
+
+    <div id="section-security" style="display:none;">
+      <section>
+        <h3>Security &amp; Compliance Posture</h3>
+        <div class="compliance-grid" id="complianceGrid"></div>
+      </section>
+    </div>
+
+    <div id="section-audit" style="display:none;">
+      <section>
+        <h3>Audit Trail <span class="hint">Immutable, time-stamped (ALCOA+)</span></h3>
+        <div class="audit" id="auditLog"></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+const API = "http://localhost:5000/api";
+let TOKEN = localStorage.getItem("aiia_token");
+let ROLE_KEY = localStorage.getItem("aiia_role_key");
+let ROLE_NAME = localStorage.getItem("aiia_role_name");
+let ROLE_LABEL = localStorage.getItem("aiia_role_label");
+
+const WRITE_ROLES = { ae: ["investigator","coordinator","pv"], consent: ["investigator","coordinator","ethics"], esign: ["investigator","coordinator","ethics","pv","leadership"], edc: ["coordinator","pv","leadership"] };
+
+function pillClass(status){
+  const m = {Active:"active", Enrolling:"enrolling", "Closing Out":"closing", Approved:"approved", "Renewal Due":"renewal", Consented:"consented", Withdrawn:"withdrawn", Pending:"pending"};
+  return m[status] || "active";
+}
+
+async function api(path, opts={}){
+  const headers = Object.assign({}, opts.headers, {"Authorization": "Bearer " + TOKEN});
+  const res = await fetch(API + path, Object.assign({}, opts, {headers}));
+  if(res.status === 401){ doLogout(); throw new Error("session expired"); }
+  if(!res.ok){ const err = await res.json().catch(()=>({error:"request failed"})); throw new Error(err.error || "request failed"); }
+  return res;
+}
+async function apiJSON(path, opts={}){ return (await api(path, opts)).json(); }
+
+// ---------- Login ----------
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("loginUsername").value;
+  const password = document.getElementById("loginPassword").value;
+  const errEl = document.getElementById("loginError");
+  try{
+    const res = await fetch(API + "/login", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({username, password})});
+    if(!res.ok){ const d = await res.json(); errEl.textContent = d.error || "Login failed"; return; }
+    const data = await res.json();
+    TOKEN = data.token; ROLE_KEY = username; ROLE_NAME = data.name; ROLE_LABEL = data.role;
+    localStorage.setItem("aiia_token", TOKEN);
+    localStorage.setItem("aiia_role_key", ROLE_KEY);
+    localStorage.setItem("aiia_role_name", ROLE_NAME);
+    localStorage.setItem("aiia_role_label", ROLE_LABEL);
+    showApp();
+  }catch(err){
+    errEl.textContent = "Could not reach the backend. Is 'python app.py' running?";
+  }
+});
+
+document.getElementById("logoutBtn").addEventListener("click", doLogout);
+function doLogout(){
+  if(TOKEN){ fetch(API+"/logout", {method:"POST", headers:{"Authorization":"Bearer "+TOKEN}}).catch(()=>{}); }
+  localStorage.removeItem("aiia_token"); localStorage.removeItem("aiia_role_key");
+  localStorage.removeItem("aiia_role_name"); localStorage.removeItem("aiia_role_label");
+  TOKEN = null;
+  document.getElementById("app").classList.remove("visible");
+  document.getElementById("loginScreen").style.display = "flex";
+}
+
+function showApp(){
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("app").classList.add("visible");
+  document.getElementById("chipName").textContent = ROLE_NAME;
+  document.getElementById("chipRole").textContent = ROLE_LABEL;
+  applyRoleVisibility();
+  loadAll();
+}
+
+// ---------- Navigation ----------
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll("main > div[id^='section-']").forEach(s => s.style.display = "none");
+    document.getElementById("section-" + btn.dataset.section).style.display = "block";
+  });
+});
+
+// ---------- Role-based visibility ----------
+function applyRoleVisibility(){
+  const roleInfo = {
+    investigator: "Showing studies where this Investigator is listed as PI. Full write access for AE logging, consent, and e-signatures.",
+    coordinator: "Day-to-day operations view: AE logging, consent updates, EDC sync, and e-signatures.",
+    ethics: "Institutional Ethics Committee view: consent oversight and e-signature authority over ethics approvals.",
+    pv: "NPvCC Pharmacovigilance view: signal detection, AE review, and integrations are the primary focus here.",
+    leadership: "Institutional Leadership view: full portfolio, compliance posture, and integration status across all studies.",
+    regulator: "Read-only regulator view. All write actions (AE logging, consent, e-signatures, EDC sync) are disabled — enforced by the backend, not just hidden in the UI.",
+  };
+  document.getElementById("roleTitle").textContent = ROLE_LABEL + " Dashboard";
+  document.getElementById("roleNote").textContent = roleInfo[ROLE_KEY] || "";
+
+  document.getElementById("aeFormSection").style.display = WRITE_ROLES.ae.includes(ROLE_KEY) ? "block" : "none";
+  document.getElementById("esignFormSection").style.display = WRITE_ROLES.esign.includes(ROLE_KEY) ? "block" : "none";
+  document.getElementById("edcSyncBtn").style.display = WRITE_ROLES.edc.includes(ROLE_KEY) ? "inline-block" : "none";
+}
+
+// ---------- Renderers ----------
+function renderKPIs(kpis){
+  document.getElementById("asOf").textContent = "As of " + kpis.as_of;
+  document.getElementById("kpiRow").innerHTML = [
+    {label:"Active / Enrolling Studies", num: kpis.active_trials + " / " + kpis.total_trials},
+    {label:"Overall Enrollment", num: Math.round(kpis.overall_enrollment_pct*100) + "%"},
+    {label:"Open Data Queries", num: kpis.open_data_queries},
+    {label:"AE / SAE Reports", num: kpis.ae_count + " / " + kpis.sae_count},
+  ].map(i => `<div class="kpi"><div class="num">${i.num}</div><div class="label">${i.label}</div></div>`).join("");
+}
+
+function renderAlerts(alerts){
+  const el = document.getElementById("alertList");
+  if(!alerts.length){ el.innerHTML = '<div class="empty">No open alerts.</div>'; return; }
+  el.innerHTML = alerts.map(a => `
+    <div class="alert ${a.severity}">
+      <span class="tag">${a.type}</span>
+      <div><div class="detail">${a.detail}</div><span class="trial">${a.trial_id}</span></div>
+    </div>`).join("");
+}
+
+function renderTrials(trials){
+  document.getElementById("trialTable").innerHTML = trials.map(t => `
+    <tr>
+      <td><strong>${t.id}</strong><br><span style="color:var(--ink-soft)">${t.title}</span></td>
+      <td>${t.phase}</td>
+      <td><span class="pill ${pillClass(t.status)}">${t.status}</span></td>
+      <td>${t.current_enrollment}/${t.target_enrollment}</td>
+      <td>${t.ctri_number}<br><span style="color:var(--ink-soft)">upd. ${t.ctri_last_updated}</span></td>
+      <td><span class="pill ${pillClass(t.ethics_status)}">${t.ethics_status}</span></td>
+    </tr>`).join("");
+  document.getElementById("trialSelect").innerHTML = trials.map(t => `<option value="${t.id}">${t.id} — ${t.title}</option>`).join("");
+}
+
+function renderSignals(signals){
+  const el = document.getElementById("signalList");
+  if(!signals.length){ el.innerHTML = '<div class="empty">No pharmacovigilance signals detected in current data.</div>'; return; }
+  el.innerHTML = signals.map(s => `
+    <div class="signal-card">
+      <h4>${s.symptom} — ${s.trial_id} (${s.report_count} reports, ${s.distinct_sites} site${s.distinct_sites>1?'s':''}, ${s.span_days} day span)</h4>
+      <div class="route">Routed to: ${s.route_to} · anomaly score ${s.anomaly_score}</div>
+      <ul>${s.reasons.map(r => `<li>${r}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderAudit(log){
+  const el = document.getElementById("auditLog");
+  if(!log.length){ el.innerHTML = '<div class="empty">No audit entries yet.</div>'; return; }
+  el.innerHTML = log.slice().reverse().map(a => `<div><strong>${a.timestamp}</strong> — ${a.action} by ${a.actor}: ${a.detail}</div>`).join("");
+}
+
+function renderSubjects(subjects){
+  const canEdit = WRITE_ROLES.consent.includes(ROLE_KEY);
+  document.getElementById("subjectsTable").innerHTML = subjects.map(s => `
+    <tr>
+      <td><strong>${s.subject_id}</strong><br><span style="color:var(--ink-soft)">${s.name}</span></td>
+      <td>${s.age} / ${s.sex}</td>
+      <td>${s.arm}</td>
+      <td>${s.site}</td>
+      <td>${s.abha_id}</td>
+      <td><span class="pill ${pillClass(s.consent_status)}">${s.consent_status}</span></td>
+      <td>${canEdit ? `
+        <div class="consent-action">
+          <select data-subject="${s.subject_id}" data-trial="${s.trial_id}" class="consentSelect">
+            <option ${s.consent_status==='Pending'?'selected':''}>Pending</option>
+            <option ${s.consent_status==='Consented'?'selected':''}>Consented</option>
+            <option ${s.consent_status==='Withdrawn'?'selected':''}>Withdrawn</option>
+          </select>
+          <button class="consentSaveBtn" data-subject="${s.subject_id}" data-trial="${s.trial_id}">Save</button>
+        </div>` : ""}
+      </td>
+    </tr>`).join("");
+
+  document.querySelectorAll(".consentSaveBtn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const subjectId = btn.dataset.subject, trialId = btn.dataset.trial;
+      const select = document.querySelector(`.consentSelect[data-subject="${subjectId}"]`);
+      try{
+        await apiJSON("/consent", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({trial_id: trialId, subject_id: subjectId, status: select.value})});
+        loadSubjects(); loadAudit();
+      }catch(e){ alert("Could not update consent: " + e.message); }
+    });
+  });
+}
+
+function renderEsign(data){
+  document.getElementById("esignTable").innerHTML = data.signatures.slice().reverse().map(s => `
+    <tr><td>${s.timestamp}</td><td>${s.actor} (${s.role})</td><td>${s.meaning}</td><td>${s.record_type}: ${s.record_id}</td><td style="font-family:monospace; font-size:11px;">${s.hash}</td></tr>`).join("") || '<tr><td colspan="5" class="empty">No signatures yet.</td></tr>';
+  const badge = document.getElementById("chainBadge");
+  badge.textContent = data.chain_valid ? "Chain valid" : "Chain broken";
+  badge.className = "chain-badge " + (data.chain_valid ? "valid" : "invalid");
+}
+
+function renderIntegrations(status){
+  const labels = {edc:"Electronic Data Capture", abdm:"ABDM / ABHA Linkage", fhir:"HL7 FHIR R4"};
+  document.getElementById("integrationRow").innerHTML = Object.entries(status).map(([key, s]) => `
+    <div class="integration-card">
+      <h4><span class="dot"></span>${labels[key]}</h4>
+      <p>${s.system}</p>
+      <p><strong>Last sync:</strong> ${s.last_sync || "never"}</p>
+    </div>`).join("");
+}
+
+function renderCompliance(posture){
+  const sections = [
+    {title:"Hosting", data: posture.hosting},
+    {title:"Encryption", data: posture.encryption},
+    {title:"DPDP Act 2023", data: posture.dpdp_2023},
+  ];
+  document.getElementById("complianceGrid").innerHTML = sections.map(sec => `
+    <div class="compliance-card">
+      <h4>${sec.title}</h4>
+      ${Object.entries(sec.data).map(([k,v]) => `<p><span class="k">${k.replace(/_/g," ")}:</span> ${v}</p>`).join("")}
+    </div>`).join("");
+}
+
+// ---------- Loaders ----------
+async function loadSubjects(){ try{ renderSubjects(await apiJSON("/subjects")); }catch(e){} }
+async function loadAudit(){ try{ renderAudit(await apiJSON("/audit-log")); }catch(e){} }
+
+async function loadAll(){
+  try{
+    const [kpis, trials, signals, audit, subjects, esign, integ, posture] = await Promise.all([
+      apiJSON("/kpis"), apiJSON("/trials"), apiJSON("/pharmacovigilance/signals"),
+      apiJSON("/audit-log"), apiJSON("/subjects"), apiJSON("/esign"),
+      apiJSON("/integrations/status"), apiJSON("/compliance/posture"),
+    ]);
+    renderKPIs(kpis); renderAlerts(kpis.alerts); renderTrials(trials);
+    renderSignals(signals); renderAudit(audit); renderSubjects(subjects);
+    renderEsign(esign); renderIntegrations(integ); renderCompliance(posture);
+  }catch(e){
+    document.getElementById("alertList").innerHTML = '<div class="empty">Could not reach the backend at ' + API + '. Run <code>python app.py</code> in /backend, then reload.</div>';
+  }
+}
+
+// ---------- Forms ----------
+document.getElementById("aeForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const body = Object.fromEntries(new FormData(e.target).entries());
+  body.serious = body.serious === "true";
+  const msg = document.getElementById("formMsg");
+  try{
+    await apiJSON("/ae-reports", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
+    msg.style.color = "var(--green)"; msg.textContent = "Logged. Signal detector and audit trail updated.";
+    e.target.reset(); loadAll();
+  }catch(err){ msg.style.color = "var(--red)"; msg.textContent = err.message; }
+});
+
+document.getElementById("esignForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const body = Object.fromEntries(new FormData(e.target).entries());
+  const msg = document.getElementById("esignMsg");
+  try{
+    await apiJSON("/esign", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
+    msg.style.color = "var(--green)"; msg.textContent = "Signed and added to ledger.";
+    e.target.reset();
+    renderEsign(await apiJSON("/esign")); loadAudit();
+  }catch(err){ msg.style.color = "var(--red)"; msg.textContent = err.message; }
+});
+
+document.getElementById("edcSyncBtn").addEventListener("click", async () => {
+  const msg = document.getElementById("edcMsg");
+  try{
+    await apiJSON("/integrations/edc-sync", {method:"POST"});
+    msg.style.color = "var(--green)"; msg.textContent = "Simulated EDC sync complete — new AE record pulled in.";
+    loadAll();
+  }catch(err){ msg.style.color = "var(--red)"; msg.textContent = err.message; }
+});
+
+document.querySelectorAll(".export-btn").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const path = "/cdisc/" + btn.dataset.export + (btn.dataset.export === "define-xml" ? "" : "?format=csv");
+    try{
+      const res = await api(path);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = btn.dataset.name; document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
+    }catch(err){ alert("Export failed: " + err.message); }
+  });
+});
+
+// ---------- Boot ----------
+if(TOKEN){ showApp(); } else { document.getElementById("loginScreen").style.display = "flex"; }
+</script>
+</body>
+</html>
